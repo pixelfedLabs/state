@@ -21,6 +21,7 @@ class CreateFollowersTable extends Migration
             $table->string('inbox_url')->index();
             $table->string('shared_inbox_url')->nullable()->index();
             $table->text('public_key')->nullable();
+            $table->string('key_id')->nullable()->index();
             $table->unique(['actor_id', 'profile_url']);
             $table->timestamps();
         });
