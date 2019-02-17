@@ -26,7 +26,8 @@ class DashboardController extends Controller
 
 	public function systems()
 	{
-		return view('dashboard.systems.home');
+		$systems = System::orderByDesc('id')->paginate(10);
+		return view('dashboard.systems.home', compact('systems'));
 	}
 
 	public function services()
