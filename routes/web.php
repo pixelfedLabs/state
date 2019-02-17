@@ -32,3 +32,6 @@ Route::group(['prefix' => 'dashboard'], function() {
 });
 
 Route::get('account/{id}', 'ApiController@actorProfile');
+
+Route::get('site/about', 'SiteController@about')->name('site.about');
+Route::get('site/subscribe', 'SiteController@subscribe')->name('site.subscribe');
