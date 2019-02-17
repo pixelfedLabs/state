@@ -10690,7 +10690,6 @@ a.text-dark:focus {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-top: none;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 .nav-tabs .nav-link.active,
