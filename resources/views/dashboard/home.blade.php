@@ -48,11 +48,26 @@
 			<div class="list-group list-group-flush" style="max-height: 400px;overflow-y: auto;">
 			@foreach($incidents as $incident)
 				<div class="list-group-item">
+					<div class="d-flex justify-content-between">
 						<div>
-							<p class="font-nunito font-weight-bold mb-0 small">
+							<p class=" font-nunito font-weight-bold mb-0">
 								ID: {{$incident->id}}
 							</p>
+							<p class=" font-nunito font-weight-bold mb-0">
+								System: <a class="font-nunito font-weight-bold" href="{{$incident->system->dashboardUrl()}}">{{str_limit($incident->system->name,18)}}</a>
+							</p>
+							<p class=" font-nunito font-weight-bold mb-0">
+								Service: <a class="font-nunito font-weight-bold" href="{{$incident->service->dashboardUrl()}}">{{str_limit($incident->service->name,18)}}</a>
+							</p>
+							<p class=" font-nunito font-weight-bold mb-0">
+								State: <span class="font-nunito font-weight-bold">{{$incident->state}}</span>
+							</p>
+							<p class="mb-0">{{$incident->title}}</p>
 						</div>
+						<div>
+							<a class="btn btn-outline-secondary font-nunito btn-sm py-0" href="#">View</a>
+						</div>
+					</div>
 				</div>
 			@endforeach
 			</div>
