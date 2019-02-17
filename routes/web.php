@@ -23,5 +23,8 @@ Route::group(['prefix' => 'dashboard'], function() {
 
 	Route::redirect('/', '/dashboard/home');
 	Route::get('home', 'DashboardController@home')->name('dashboard.home');
+	Route::get('systems', 'DashboardController@systems')->name('dashboard.systems');
+	Route::get('services', 'DashboardController@services')->name('dashboard.services');
+	Route::get('incidents', 'DashboardController@incidents')->name('dashboard.incidents');
 
 });
