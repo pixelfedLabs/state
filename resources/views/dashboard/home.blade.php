@@ -65,7 +65,7 @@
 							<p class="mb-0">{{$incident->title}}</p>
 						</div>
 						<div>
-							<a class="btn btn-outline-secondary font-nunito btn-sm py-0" href="#">View</a>
+							<a class="btn btn-outline-secondary font-nunito btn-sm py-0" href="{{$incident->dashboardUrl()}}">View</a>
 						</div>
 					</div>
 				</div>
