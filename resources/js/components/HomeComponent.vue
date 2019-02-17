@@ -1,8 +1,8 @@
 <template>
 	
-<div class="container mt-3">
+<div v-if="systems.length" class="container mt-3">
 
-	<p class="h4 text-center pb-5 font-nunito">Status Monitoring for <span class="font-weight-bold">pixelfed.social</span></p>
+	<p class="h4 text-center pb-5 font-nunito">Status Monitoring for <a class="font-weight-bold text-dark" :href="systems[0].website">{{systems[0].domain}}</a></p>
 
 	<div :class="systemHealth.class">
 		<span class="d-inline text-white h3 mb-0 font-nunito font-weight-bold" v-html="systemHealth.message">
@@ -264,6 +264,7 @@
 				axios.get('/api/v1/systems')
 					.then(res => {
 						this.systems = res.data;
+						this.services = this.systems[0].services;
 						console.log(res);
 					})
 			}
