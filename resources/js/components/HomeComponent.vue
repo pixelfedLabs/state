@@ -5,12 +5,12 @@
 	<p class="h4 text-center pb-5 font-nunito">Status Monitoring for <span class="font-weight-bold">pixelfed.social</span></p>
 
 	<div :class="systemHealth.class">
-		<span class="d-inline text-white h3 mb-0" v-html="systemHealth.message">
+		<span class="d-inline text-white h3 mb-0 font-nunito font-weight-bold" v-html="systemHealth.message">
 		</span>
 	</div>
 
 	<div class="my-5">
-		<h2 class="pb-2">Current Status</h2>
+		<h2 class="pb-2 font-nunito font-weight-bold">Current Status</h2>
 		<div class="list-group box-shadow">
 			<div class="list-group-item d-flex justify-content-between py-3" v-for="(service, index) in services">
 				<div>
@@ -26,7 +26,7 @@
 
 	<div class="row">
 		<div class="my-5 w-100">
-			<p class="h2 pb-3">Past Incidents</p>
+			<p class="h2 pb-3 font-nunito font-weight-bold">Past Incidents</p>
 			<div class="col-12 incidents-list">
 				<div v-if="incidents" v-for="(incident, index) in incidents" class="status-day">
 					<div class="media pb-5">
