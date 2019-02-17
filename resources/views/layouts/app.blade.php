@@ -42,10 +42,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link font-nunito font-weight-bold" href="#">About</a>
+                            <a class="nav-link font-nunito font-weight-bold {{request()->is('site/about')?'active':''}}" href="{{route('site.about')}}">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-nunito font-weight-bold mx-3" href="#">Subscribe</a>
+                            <a class="nav-link font-nunito font-weight-bold mx-3 {{request()->is('site/subscribe')?'active':''}}" href="{{route('site.subscribe')}}">Subscribe</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest
