@@ -28,6 +28,7 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('services', 'DashboardController@services')->name('dashboard.services');
 	Route::get('services/show/{id}', 'DashboardController@serviceShow');
 	Route::get('incidents', 'DashboardController@incidents')->name('dashboard.incidents');
+	Route::get('incidents/show/{id}', 'DashboardController@incidentShow');
 	Route::get('incidents/create', 'DashboardController@incidentCreate')->name('dashboard.incidents.create');
 	Route::post('incidents/create', 'DashboardController@incidentStore');
 
