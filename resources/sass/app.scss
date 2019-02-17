@@ -36,3 +36,17 @@
 .text-lighter {
   color:#B8C2CC !important;
 } 
+
+.card-top-nav {
+	border-top-left-radius: 0; 
+	border-top-right-radius: 0;
+	border-top:none;
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #495057;
+    font-weight: bold;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #f8fafc;
+}
