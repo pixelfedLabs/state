@@ -10,4 +10,9 @@ class Incident extends Model
 	{
 		return $this->belongsTo(Service::class);
 	}
+
+	public function system()
+	{
+		return $this->belongsTo(System::class);
+	}
 }
