@@ -30,3 +30,5 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('incidents', 'DashboardController@incidents')->name('dashboard.incidents');
 
 });
+
+Route::get('account/{id}', 'ApiController@actorProfile');
