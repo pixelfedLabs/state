@@ -41,6 +41,13 @@ class DashboardController extends Controller
 		return view('dashboard.services.home');
 	}
 
+
+	public function serviceShow(Request $request, $id)
+	{
+		$service = Service::findOrFail($id);
+		return view('dashboard.services.show', compact('service'));
+	}
+
 	public function incidents()
 	{
 		return view('dashboard.incidents.home');
