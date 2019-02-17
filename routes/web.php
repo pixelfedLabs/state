@@ -18,3 +18,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'dashboard'], function() {
+
+	Route::redirect('/', '/dashboard/home');
+	Route::get('home', 'DashboardController@home')->name('dashboard.home');
+
+});
