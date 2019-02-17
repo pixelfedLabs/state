@@ -1,13 +1,5 @@
-@extends('layouts.app')
+@extends('dashboard.partial.layout')
 
-@section('content')
-<div class="container">
-	
-	@include('dashboard.partial.nav')
-
-	<div class="card card-body card-top-nav">
-		dashboard here
-	</div>
-
-</div>
+@section('page')
+dashboard here
 @endsection
