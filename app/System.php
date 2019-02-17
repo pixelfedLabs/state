@@ -10,4 +10,9 @@ class System extends Model
 	{
 		return url("/dashboard/systems/show/{$this->id}");
 	}
+
+	public function services()
+	{
+		return $this->hasMany(Service::class);		
+	}
 }
