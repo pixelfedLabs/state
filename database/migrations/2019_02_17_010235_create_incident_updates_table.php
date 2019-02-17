@@ -17,6 +17,7 @@ class CreateIncidentUpdatesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('service_id')->unsigned()->index();
             $table->bigInteger('incident_id')->unsigned()->index();
+            $table->uuid('slug')->index();
             $table->string('state')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

@@ -16,6 +16,7 @@ class CreateIncidentsTable extends Migration
         Schema::create('incidents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('service_id')->unsigned()->index();
+            $table->uuid('slug')->index();
             $table->string('title')->nullable();
             $table->string('state')->nullable();
             $table->timestamp('resolved_at')->nullable();
