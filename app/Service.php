@@ -20,4 +20,9 @@ class Service extends Model
 	{
 		return $this->belongsTo(Service::class);
 	}
+
+	public function incidents()
+	{
+		return $this->hasMany(Incident::class);
+	}
 }
