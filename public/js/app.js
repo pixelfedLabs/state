@@ -1920,6 +1920,7 @@ __webpack_require__.r(__webpack_exports__);
         message: '<i class="fas fa-check"></i> <span>All Systems Operational</span>',
         state: 'ok'
       },
+      systems: [],
       services: [{
         name: 'Website',
         state: 'ok',
@@ -1949,10 +1950,12 @@ __webpack_require__.r(__webpack_exports__);
       incidents: []
     };
   },
+  beforeMount: function beforeMount() {
+    this.fetchSystems();
+  },
   mounted: function mounted() {
     var _this = this;
 
-    $('[data-toggle="tooltip"]').tooltip();
     this.populatePastTwoWeeks();
     this.services.map(function (item) {
       if (item.state != 'ok') {
@@ -1963,6 +1966,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.systemHealthToggle(item.state);
       }
     });
+  },
+  updated: function updated() {
+    $('[data-toggle="tooltip"]').tooltip();
   },
   methods: {
     stateToText: function stateToText(state) {
@@ -2042,6 +2048,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     humanDate: function humanDate(date) {
       return moment(date).format('MMM DD YYYY');
+    },
+    fetchSystems: function fetchSystems() {
+      var _this2 = this;
+
+      axios.get('/api/v1/systems').then(function (res) {
+        _this2.systems = res.data;
+        _this2.services = _this2.systems[0].services; //this.incidents = this.services[0].incidents;
+
+        console.log(res);
+      });
     }
   }
 });
@@ -37782,164 +37798,168 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mt-3" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { class: _vm.systemHealth.class }, [
-      _c("span", {
-        staticClass: "d-inline text-white h3 mb-0 font-nunito font-weight-bold",
-        domProps: { innerHTML: _vm._s(_vm.systemHealth.message) }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "my-5" }, [
-      _c("h2", { staticClass: "pb-2 font-nunito font-weight-bold" }, [
-        _vm._v("Current Status")
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "list-group box-shadow" },
-        _vm._l(_vm.services, function(service, index) {
-          return _c(
-            "div",
+  return _vm.systems.length
+    ? _c("div", { staticClass: "container mt-3" }, [
+        _c("p", { staticClass: "h4 text-center pb-5 font-nunito" }, [
+          _vm._v("Status Monitoring for "),
+          _c(
+            "a",
             {
-              staticClass: "list-group-item d-flex justify-content-between py-3"
+              staticClass: "font-weight-bold text-dark",
+              attrs: { href: _vm.systems[0].website }
             },
-            [
-              _c("div", [
-                _c("span", { staticClass: "lead font-weight-bold mr-2" }, [
-                  _vm._v(_vm._s(service.name))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    attrs: {
-                      "data-toggle": "tooltip",
-                      title: service.description
-                    }
-                  },
-                  [_c("i", { staticClass: "far fa-question-circle" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  domProps: {
-                    innerHTML: _vm._s(_vm.stateToText(service.state))
-                  }
-                },
-                [_vm._v("\n\t\t\t\t\tLoading...\n\t\t\t\t")]
-              )
-            ]
+            [_vm._v(_vm._s(_vm.systems[0].domain))]
           )
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "my-5 w-100" }, [
-        _c("p", { staticClass: "h2 pb-3 font-nunito font-weight-bold" }, [
-          _vm._v("Past Incidents")
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12 incidents-list" },
-          _vm._l(_vm.incidents, function(incident, index) {
-            return _vm.incidents
-              ? _c("div", { staticClass: "status-day" }, [
-                  _c("div", { staticClass: "media pb-5" }, [
-                    _vm._m(1, true),
+        _c("div", { class: _vm.systemHealth.class }, [
+          _c("span", {
+            staticClass:
+              "d-inline text-white h3 mb-0 font-nunito font-weight-bold",
+            domProps: { innerHTML: _vm._s(_vm.systemHealth.message) }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "my-5" }, [
+          _c("h2", { staticClass: "pb-2 font-nunito font-weight-bold" }, [
+            _vm._v("Current Status")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "list-group box-shadow" },
+            _vm._l(_vm.services, function(service, index) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "list-group-item d-flex justify-content-between py-3"
+                },
+                [
+                  _c("div", [
+                    _c("span", { staticClass: "lead font-weight-bold mr-2" }, [
+                      _vm._v(_vm._s(service.name))
+                    ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "media-body mb-3" }, [
-                      _c("p", { staticClass: "h4 font-weight-bold" }, [
-                        _vm._v(_vm._s(_vm.humanDate(incident.date)))
-                      ]),
-                      _vm._v(" "),
-                      index == 1
-                        ? _c(
-                            "div",
-                            { staticClass: "card card-body box-shadow" },
-                            [
-                              _c(
-                                "p",
-                                { staticClass: "lead font-weight-bold" },
+                    _c(
+                      "span",
+                      {
+                        attrs: {
+                          "data-toggle": "tooltip",
+                          title: service.tooltip
+                        }
+                      },
+                      [_c("i", { staticClass: "far fa-question-circle" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      domProps: {
+                        innerHTML: _vm._s(_vm.stateToText(service.state))
+                      }
+                    },
+                    [_vm._v("\n\t\t\t\t\tLoading...\n\t\t\t\t")]
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", {}, [
+          _c("div", { staticClass: "my-5 w-100" }, [
+            _c("p", { staticClass: "h2 pb-3 font-nunito font-weight-bold" }, [
+              _vm._v("Past Incidents")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 incidents-list" },
+              _vm._l(_vm.incidents, function(incident, index) {
+                return _vm.incidents
+                  ? _c("div", { staticClass: "status-day" }, [
+                      _c("div", { staticClass: "media pb-5" }, [
+                        _vm._m(0, true),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media-body mb-3" }, [
+                          _c("p", { staticClass: "h4 font-weight-bold" }, [
+                            _vm._v(_vm._s(_vm.humanDate(incident.date)))
+                          ]),
+                          _vm._v(" "),
+                          incident.incidents.length
+                            ? _c(
+                                "div",
+                                { staticClass: "card card-body box-shadow" },
+                                [
+                                  _c(
+                                    "p",
+                                    { staticClass: "lead font-weight-bold" },
+                                    [
+                                      _vm._v(
+                                        "Incident on " +
+                                          _vm._s(_vm.humanDate(incident.date))
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(1, true),
+                                  _c("p", { staticClass: "text-muted small" }, [
+                                    _vm._v("6:42pm")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("p"),
+                                  _vm._v(" "),
+                                  _vm._m(2, true),
+                                  _c("p", { staticClass: "text-muted small" }, [
+                                    _vm._v("6:20pm")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("p"),
+                                  _vm._v(" "),
+                                  _vm._m(3, true),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-muted small mb-0" },
+                                    [_vm._v("6:00pm")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p")
+                                ]
+                              )
+                            : _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "lead text-muted font-weight-lighter"
+                                },
                                 [
                                   _vm._v(
-                                    "Incident on " +
-                                      _vm._s(_vm.humanDate(incident.date))
+                                    "\n\t\t\t\t\t\t\t\tNo incidents reported.\n\t\t\t\t\t\t\t"
                                   )
                                 ]
-                              ),
-                              _vm._v(" "),
-                              _vm._m(2, true),
-                              _c("p", { staticClass: "text-muted small" }, [
-                                _vm._v("6:42pm")
-                              ]),
-                              _vm._v(" "),
-                              _c("p"),
-                              _vm._v(" "),
-                              _vm._m(3, true),
-                              _c("p", { staticClass: "text-muted small" }, [
-                                _vm._v("6:20pm")
-                              ]),
-                              _vm._v(" "),
-                              _c("p"),
-                              _vm._v(" "),
-                              _vm._m(4, true),
-                              _c(
-                                "p",
-                                { staticClass: "text-muted small mb-0" },
-                                [_vm._v("6:00pm")]
-                              ),
-                              _vm._v(" "),
-                              _c("p")
-                            ]
-                          )
-                        : _c(
-                            "div",
-                            {
-                              staticClass: "lead text-muted font-weight-lighter"
-                            },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\tNo incidents reported.\n\t\t\t\t\t\t\t"
                               )
-                            ]
-                          )
+                        ])
+                      ])
                     ])
-                  ])
-                ])
-              : _vm._e()
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12 incidents-footer" }),
-        _vm._v(" "),
-        _vm._m(5),
-        _vm._v(" "),
-        _vm._m(6)
+                  : _vm._e()
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 incidents-footer" }),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5)
+          ])
+        ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "h4 text-center pb-5 font-nunito" }, [
-      _vm._v("Status Monitoring for "),
-      _c("span", { staticClass: "font-weight-bold" }, [
-        _vm._v("pixelfed.social")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
