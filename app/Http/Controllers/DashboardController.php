@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\{
+	Incident,
+	IncidentUpdate,
+	Service,
+	System
+};
 
 class DashboardController extends Controller
 {
@@ -13,7 +19,9 @@ class DashboardController extends Controller
 
 	public function home()
 	{
-		return view('dashboard.home');
+		$services = Service::orderByDesc('created_at')->paginate(10);
+		$incidents = Incident::orderByDesc('created_at')->paginate(10);
+		return view('dashboard.home', compact('services', 'incidents'));
 	}
 
 	public function systems()
