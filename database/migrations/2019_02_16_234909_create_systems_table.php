@@ -17,7 +17,7 @@ class CreateSystemsTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->string('url')->nullable();
+            $table->string('website')->nullable();
             $table->boolean('active')->default(false)->index();
             $table->timestamps();
         });
