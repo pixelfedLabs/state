@@ -20,4 +20,9 @@ class Actor extends Model
 	{
 		return $this->url() . $suffix;
 	}
+
+	public function followers()
+	{
+		return $this->hasMany(Follower::class);
+	}
 }
