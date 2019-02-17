@@ -38,7 +38,8 @@ class DashboardController extends Controller
 
 	public function services()
 	{
-		return view('dashboard.services.home');
+		$services = Service::orderByDesc('id')->paginate(10);
+		return view('dashboard.services.home', compact('services'));
 	}
 
 
