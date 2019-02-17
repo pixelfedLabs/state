@@ -19,8 +19,8 @@ class DashboardController extends Controller
 
 	public function home()
 	{
-		$services = Service::orderByDesc('created_at')->paginate(10);
-		$incidents = Incident::orderByDesc('created_at')->paginate(10);
+		$services = Service::orderByDesc('id')->paginate(10);
+		$incidents = Incident::orderByDesc('id')->paginate(10);
 		return view('dashboard.home', compact('services', 'incidents'));
 	}
 
