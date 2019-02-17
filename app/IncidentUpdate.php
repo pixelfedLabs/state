@@ -10,4 +10,9 @@ class IncidentUpdate extends Model
 	{
 		return $this->belongsTo(Incident::class);
 	}
+
+	public function dashboardUrl()
+	{
+		return url("/dashboard/incidents/show/{$this->incident->id}/update/{$this->id}");
+	}
 }
