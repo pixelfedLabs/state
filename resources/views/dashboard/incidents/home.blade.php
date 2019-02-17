@@ -14,4 +14,23 @@
 </div>
 <hr>
 
+<ul class="list-group">
+@foreach($incidents as $incident)
+<li class="list-group-item">
+	<div class="d-flex justify-content-between">
+		<div>
+			<span class="text-primary font-nunito font-weight-bold">{{$incident->id}}</span>
+			<span class="pl-2 font-nunito font-weight-bold text-truncate">{{$incident->title}}</span>
+		</div>
+		<div>
+			<a class="btn btn-outline-secondary font-nunito btn-sm py-0" href="{{$incident->dashboardUrl()}}">View</a>
+		</div>
+	</div>
+</li>
+@endforeach
+</ul>
+
+<div class="d-flex justify-content-center mt-5">
+	{{$incidents->links()}}
+</div>
 @endsection
