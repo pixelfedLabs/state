@@ -15,4 +15,9 @@ class System extends Model
 	{
 		return $this->hasMany(Service::class);		
 	}
+
+	public function incidents()
+	{
+		return $this->hasMany(Incident::class);		
+	}
 }
