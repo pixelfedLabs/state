@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\{
 	Incident,
 	IncidentUpdate,
@@ -42,7 +43,6 @@ class DashboardController extends Controller
 		return view('dashboard.services.home', compact('services'));
 	}
 
-
 	public function serviceShow(Request $request, $id)
 	{
 		$service = Service::findOrFail($id);
@@ -52,5 +52,34 @@ class DashboardController extends Controller
 	public function incidents()
 	{
 		return view('dashboard.incidents.home');
+	}
+
+	public function incidentShow(Request $request, $id)
+	{
+		return view('dashboard.incidents.home');
+	}
+
+	public function incidentCreate(Request $request)
+	{
+		$services = Service::with('system')->get();
+		return view('dashboard.incidents.create', compact('services'));
+	}
+
+	public function incidentStore(Request $request)
+	{
+		$this->validate($request, [
+			'service' => 'required|integer|exists:services,id',
+			'title' => 'nullable|max:150'
+		]);
+		$service = Service::with('system')->findOrFail($request->input('service'));
+		$title = $request->input('title');
+
+		$incident = new Incident;
+		$incident->system_id = $service->system->id;
+		$incident->service_id = $service->id;
+		$incident->slug = (string) Str::uuid();
+		$incident->title = $title;
+		$incident->save();
+		return $incident->url();
 	}
 }
