@@ -7,7 +7,7 @@ use League\Fractal;
 
 class SystemTransformer extends Fractal\TransformerAbstract {
 
-    protected $defaultIncludes = ['services'];
+	protected $defaultIncludes = ['services'];
 
 	public function transform(System $system)
 	{
@@ -15,6 +15,7 @@ class SystemTransformer extends Fractal\TransformerAbstract {
 			'name' => $system->name,
 			'description' => $system->description,
 			'website' => $system->website,
+			'domain' => parse_url($system->website, PHP_URL_HOST)
 		];
 	}
 

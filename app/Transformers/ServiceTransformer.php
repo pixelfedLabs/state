@@ -17,7 +17,8 @@ class ServiceTransformer extends Fractal\TransformerAbstract {
 			'url' => $service->url(),
 			'description' => $service->description,
 			'tooltip' => $service->tooltip,
-			'active' => (bool) $service->active 
+			'active' => (bool) $service->active,
+			'state' => 'ok'
 		];
 	}
 
