@@ -124,6 +124,7 @@
 					message: '<i class="fas fa-check"></i> <span>All Systems Operational</span>',
 					state: 'ok'
 				},
+				systems: [],
 				services: [
 					{
 						name: 'Website',
@@ -158,6 +159,10 @@
 				],
 				incidents: []
 			}
+		},
+
+		beforeMount() {
+			this.fetchSystems();
 		},
 
 		mounted() {
@@ -253,6 +258,14 @@
 
 			humanDate(date) {
 				return moment(date).format('MMM DD YYYY');
+			},
+
+			fetchSystems() {
+				axios.get('/api/v1/systems')
+					.then(res => {
+						this.systems = res.data;
+						console.log(res);
+					})
 			}
 
 		},
