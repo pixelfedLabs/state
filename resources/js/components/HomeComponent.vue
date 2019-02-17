@@ -15,7 +15,7 @@
 			<div class="list-group-item d-flex justify-content-between py-3" v-for="(service, index) in services">
 				<div>
 					<span class="lead font-weight-bold mr-2">{{service.name}}</span>
-					<span data-toggle="tooltip" :title="service.description"><i class="far fa-question-circle"></i></span>
+					<span data-toggle="tooltip" :title="service.tooltip"><i class="far fa-question-circle"></i></span>
 				</div>
 				<div v-html="stateToText(service.state)">
 					Loading...
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="">
 		<div class="my-5 w-100">
 			<p class="h2 pb-3 font-nunito font-weight-bold">Past Incidents</p>
 			<div class="col-12 incidents-list">
@@ -35,7 +35,7 @@
 						</span>
 						<div class="media-body mb-3">
 							<p class="h4 font-weight-bold">{{humanDate(incident.date)}}</p>
-							<div v-if="index == 1" class="card card-body box-shadow">
+							<div v-if="incident.incidents.length" class="card card-body box-shadow">
 								<p class="lead font-weight-bold">Incident on {{humanDate(incident.date)}}</p>
 								<p class="mb-0">
 									<span class="text-success font-weight-bold">Resolved</span>
@@ -166,7 +166,6 @@
 		},
 
 		mounted() {
-			$('[data-toggle="tooltip"]').tooltip();
 			this.populatePastTwoWeeks();
 			this.services.map(item => {
 				if(item.state != 'ok') {
@@ -176,6 +175,10 @@
 					this.systemHealthToggle(item.state);
 				}
 			});
+		},
+
+		updated() {
+			$('[data-toggle="tooltip"]').tooltip();
 		},
 
 		methods: {
@@ -265,6 +268,7 @@
 					.then(res => {
 						this.systems = res.data;
 						this.services = this.systems[0].services;
+						//this.incidents = this.services[0].incidents;
 						console.log(res);
 					})
 			}
