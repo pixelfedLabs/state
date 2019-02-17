@@ -51,12 +51,14 @@ class DashboardController extends Controller
 
 	public function incidents()
 	{
-		return view('dashboard.incidents.home');
+		$incidents = Incident::orderByDesc('id')->paginate(10);
+		return view('dashboard.incidents.home', compact('incidents'));
 	}
 
 	public function incidentShow(Request $request, $id)
 	{
-		return view('dashboard.incidents.home');
+		$incident = Incident::with('service')->findOrFail($id);
+		return view('dashboard.incidents.show', compact('incident'));
 	}
 
 	public function incidentCreate(Request $request)
