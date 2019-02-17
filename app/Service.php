@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
+	public function url()
+	{
+		return url("/service/{$this->id}/{$this->slug}");
+	}
+
 	public function dashboardUrl()
 	{
 		return url("/dashboard/services/show/{$this->id}");
