@@ -30,6 +30,12 @@ class DashboardController extends Controller
 		return view('dashboard.systems.home', compact('systems'));
 	}
 
+	public function systemShow(Request $request, $id)
+	{
+		$system = System::findOrFail($id);
+		return view('dashboard.systems.show', compact('system'));
+	}
+
 	public function services()
 	{
 		return view('dashboard.services.home');
