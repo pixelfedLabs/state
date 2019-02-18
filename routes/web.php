@@ -20,7 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'dashboard'], function() {
-
 	Route::redirect('/', '/dashboard/home');
 	Route::get('home', 'DashboardController@home')->name('dashboard.home');
 	Route::get('systems', 'DashboardController@systems')->name('dashboard.systems');
@@ -31,7 +30,6 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('incidents/show/{id}', 'DashboardController@incidentShow');
 	Route::get('incidents/create', 'DashboardController@incidentCreate')->name('dashboard.incidents.create');
 	Route::post('incidents/create', 'DashboardController@incidentStore');
-
 });
 
 Route::get('account/{id}', 'ActivityPubController@profile');
@@ -39,3 +37,5 @@ Route::get('account/{id}/outbox', 'ActivityPubController@outbox');
 
 Route::get('site/about', 'SiteController@about')->name('site.about');
 Route::get('site/subscribe', 'SiteController@subscribe')->name('site.subscribe');
+
+Route::get('incident/{id}', 'IncidentController@show');
