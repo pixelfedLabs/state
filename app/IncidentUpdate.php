@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class IncidentUpdate extends Model
 {
+	public function system()
+	{
+		return $this->belongsTo(System::class);
+	}
+
+	public function service()
+	{
+		return $this->belongsTo(Service::class);
+	}
+
 	public function incident()
 	{
 		return $this->belongsTo(Incident::class);
@@ -26,6 +36,15 @@ class IncidentUpdate extends Model
 		switch ($this->state) {
 			case 'investigating':
 				return 'Investigating';
+				break;
+
+			case 'update':
+				return 'Update';
+				break;
+
+
+			case 'resolved':
+				return 'Resolved';
 				break;
 			
 			default:
