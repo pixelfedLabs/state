@@ -10,6 +10,7 @@
 	</div>
 	<div>
 		<a class="btn btn-outline-secondary font-nunito font-weight-bold" href="{{route('dashboard.incidents')}}"><i class="fas fa-chevron-left mr-2"></i>Back</a>
+		<a class="btn btn-primary font-nunito font-weight-bold" href="{{$incident->url()}}">View</a>
 	</div>
 </div>
 <hr>
