@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 Auth::routes();
 
@@ -37,6 +35,8 @@ Route::group(['prefix' => 'dashboard'], function() {
 
 Route::get('account/{id}', 'ActivityPubController@profile');
 Route::get('account/{id}/outbox', 'ActivityPubController@outbox');
+
+Route::get('.well-known/webfinger', 'ActivityPubController@webfinger')->name('well-known.webfinger');
 
 Route::get('site/about', 'SiteController@about')->name('site.about');
 Route::get('site/subscribe', 'SiteController@subscribe')->name('site.subscribe');
