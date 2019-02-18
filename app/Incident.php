@@ -10,7 +10,7 @@ class Incident extends Model
 	{
 		return url("/incident/{$this->slug}");
 	}
-	
+
 	public function dashboardUrl()
 	{
 		return url("/dashboard/incidents/show/{$this->id}");
@@ -24,5 +24,10 @@ class Incident extends Model
 	public function system()
 	{
 		return $this->belongsTo(System::class);
+	}
+
+	public function updates()
+	{
+		return $this->hasMany(IncidentUpdate::class);
 	}
 }
