@@ -28,35 +28,32 @@
 		<div class="my-5 w-100">
 			<p class="h2 pb-3 font-nunito font-weight-bold">Past Incidents</p>
 			<div class="col-12 incidents-list">
-				<div v-if="incidents" v-for="(incident, index) in incidents" class="status-day">
+				<div v-if="incidents" v-for="i in incidents" class="status-day">
 					<div class="media pb-5">
 						<span class="incident-icon text-white mr-3">
 							<i class="far p-0 fa-calendar"></i>
 						</span>
 						<div class="media-body mb-3">
-							<p class="h4 font-weight-bold">{{humanDate(incident.date)}}</p>
-							<div v-if="incident.incidents.length" class="card card-body box-shadow">
-								<p class="lead font-weight-bold">Incident on {{humanDate(incident.date)}}</p>
-								<p class="mb-0">
-									<span class="text-success font-weight-bold">Resolved</span>
-									<span class="mx-2">-</span>
-									<span>We have deployed changes to address API issues. We do not expect any more issues related to this incident.</span>
-									<p class="text-muted small">6:42pm</p>
-								</p>
-								<p class="mb-0">
-									<span class="font-weight-bold text-dark">Update</span>
-									<span class="mx-2">-</span>
-									<span>We continue to investigate the issue.</span>
-									<p class="text-muted small">6:20pm</p>
-								</p>
-								<p class="mb-0">
-									<span class="text-warning font-weight-bold">Investigating</span>
-									<span class="mx-2">-</span>
-									<span>We are investigating reports of API issues.</span>
-									<p class="text-muted small mb-0">6:00pm</p>
-								</p>
+							<p class="h4 font-weight-bold">{{humanDate(i.date)}}</p>
+							<div v-if="i.incidents.length" v-for="incident in i.incidents" class="card card-body box-shadow">
+								<div v-if="incident.state == 'resolved'">
+									<p class="lead font-weight-bold">Resolved Incident: {{incident.title}}</p>
+									<p class="mb-0 lead">View <a :href="incident.url">Incident</a> Report</p>
+								</div>
+								<div v-if="incident.state != 'resolved' && incident.updates.length">
+									<p class="lead font-weight-bold">Incident: {{incident.title}}</p>
+									<div v-for="update in incident.updates" class="row mt-3">
+										<div class="col-3">
+											<div class="font-weight-bold">{{update.state}}</div>
+										</div>
+										<div class="col-9">
+										<div>{{update.description}}</div>
+										<p class="small mb-0"><a :href="update.url" class="text-muted">{{update.created_at}}</a></p>
+										</div>
+									</div>
+								</div>									
 							</div>
-							<div v-else class="lead text-muted font-weight-lighter">
+							<div v-if="!i.incidents.length" class="lead text-muted font-weight-lighter">
 								No incidents reported.
 							</div>
 						</div>
@@ -156,11 +153,11 @@
 		},
 
 		beforeMount() {
+			this.fetchIncidents();
 			this.fetchSystems();
 		},
 
 		mounted() {
-			this.populatePastTwoWeeks();
 			this.services.map(item => {
 				if(item.state != 'ok') {
 					if(item.state == 'degraded' && this.systemHealth.state == 'outage') {
@@ -238,23 +235,16 @@
 				return date
 			},
 
-			populatePastTwoWeeks() {
-				let result = [];
-
-				for (let i = 0; i < 14; i++) {
-					var d = new Date();
-					d.setDate(d.getDate() - i);
-					result.push({
-						date: this.formatDate(d),
-						incidents: {}
-					});
-				}
-
-				this.incidents = result;
-			},
-
 			humanDate(date) {
 				return moment(date).format('MMM DD YYYY');
+			},
+
+			fetchIncidents()
+			{
+				axios.get('/api/v1/incidents')
+					.then(res => {
+						this.incidents = res.data;
+					});
 			},
 
 			fetchSystems() {
@@ -262,8 +252,6 @@
 					.then(res => {
 						this.systems = res.data;
 						this.services = this.systems[0].services;
-						//this.incidents = this.services[0].incidents;
-						console.log(res);
 					})
 			}
 
