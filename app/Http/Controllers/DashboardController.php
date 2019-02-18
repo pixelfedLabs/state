@@ -56,6 +56,38 @@ class DashboardController extends Controller
 		return view('dashboard.services.show', compact('service'));
 	}
 
+	public function serviceCreate(Request $request)
+	{
+		return view('dashboard.services.create');
+	}
+
+
+	public function serviceStore(Request $request)
+	{
+		$this->validate($request, [
+			'system' => 'required|integer|min:1|exists:systems,id',
+			'name'	=> 'required|string|max:40',
+			'description' => 'nullable|string|max:150',
+			'active' => 'required'
+		]);
+
+		$system = (int) $request->input('system');
+		$name = $request->input('name');
+		$description = $request->input('description');
+		$active = $request->input('active') == 'on';
+
+		$service = new Service;
+		$service->system_id = $system;
+		$service->name = $name;
+		$service->slug = str_slug($name);
+		$service->description = $description;
+		$service->tooltip = $description;
+		$service->active = $active;
+		$service->save();
+
+		return redirect($service->dashboardUrl());
+	}
+
 	public function incidents()
 	{
 		$incidents = Incident::orderByDesc('id')->paginate(10);
