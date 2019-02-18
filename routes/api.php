@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1'], function() {
 
 	Route::get('systems', 'ApiController@systems');
+
+	Route::get('incidents', 'ApiController@incidents');
 	
 });
 
