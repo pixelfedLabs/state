@@ -3,9 +3,14 @@
 @section('page')
 <div class="p-md-4">
 	
-<div class="title mb-0">
-	<p class="h3 font-nunito font-weight-bold mb-0">Services</p>
-	<p class="lead font-nunito mb-0">Manage Services</p>
+<div class="d-flex align-items-center justify-content-between mb-0">
+	<div>
+		<p class="h3 font-nunito font-weight-bold mb-0">Services</p>
+		<p class="lead font-nunito mb-0">Manage Services</p>
+	</div>
+	<div>
+		<a class="btn btn-primary font-nunito font-weight-bold" href="{{route('dashboard.services.create')}}"><i class="fas fa-plus-circle mr-2"></i>New Service</a>
+	</div>
 </div>
 <hr>
 

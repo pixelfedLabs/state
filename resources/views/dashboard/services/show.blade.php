@@ -13,7 +13,8 @@
 	<div class="col-12 col-md-6">
 		<div class="card">
 			<div class="card-header bg-light lead text-center font-nunito font-weight-bold">Incidents</div>
-			<div class="list-group list-group-flush" style="max-height: 400px;overflow-y: auto;">
+			<div class="list-group list-group-flush" style="height: 400px;overflow-y: auto;">
+			@if($service->incidents()->count() > 0)
 			@foreach($service->incidents as $incident)
 				<div class="list-group-item">
 					<div class="d-flex justify-content-between">
@@ -38,8 +39,26 @@
 					</div>
 				</div>
 			@endforeach
+			@else
+			<div class="h-100 d-flex align-items-center justify-content-center">
+				<p class="mb-0 font-nunito text-muted">There are no incidents for this service.</p>
+			</div>
+			@endif
 			</div>
 		</div>
+	</div>
+	<div class="col-12 col-md-6">
+		<ul class="list-group  mb-3">
+			<li class="list-group-item text-center">
+				<p class="lead font-nunito font-weight-bold mb-0">{{$service->system->name}}</p>
+				<p class="small text-muted mb-0">SYSTEM</p>
+			</li>
+			<li class="list-group-item text-center">
+				<p class="lead font-nunito mb-0">{{$service->description}}</p>
+				<p class="small text-muted mb-0">DESCRIPTION</p>
+			</li>
+
+		</ul>
 	</div>
 </div>
 </div>
