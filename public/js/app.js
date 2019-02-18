@@ -1905,12 +1905,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6521,7 +6515,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.incident-icon[data-v-782dcf83] {\n\tdisplay: inline-flex;\n\twidth: 44px;\n\theight: 44px;\n\tbackground-color: #343a40 !important;\n\tborder-radius: 50%;\n\talign-items: center;\n\tjustify-content: center;\n\tz-index: 3;\n}\n.status-day[data-v-782dcf83]::before {\n    position: absolute;\n    top: 0;\n    left: 34px;\n    display: block;\n    content: \"\";\n    width: 3px;\n    height: 100%;\n    background-color: #e6ebf1;\n    z-index: 1;\n}\n.incidents-footer[data-v-782dcf83] {\n\tdisplay: block;\n\twidth: 100%;\n\tborder-bottom: 3px solid #e6ebf1;\n}\n", ""]);
+exports.push([module.i, "\n.incident-icon[data-v-782dcf83] {\n\tdisplay: inline-flex;\n\twidth: 44px;\n\theight: 44px;\n\tbackground-color: #343a40 !important;\n\tborder-radius: 50%;\n\talign-items: center;\n\tjustify-content: center;\n\tz-index: 3;\n}\n.status-day[data-v-782dcf83]::before {\n    position: absolute;\n    top: 0;\n    left: 34px;\n    display: block;\n    content: \"\";\n    width: 3px;\n    height: 100%;\n    background-color: #e6ebf1;\n    z-index: 1;\n}\n", ""]);
 
 // exports
 
