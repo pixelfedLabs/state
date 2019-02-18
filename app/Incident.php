@@ -30,4 +30,26 @@ class Incident extends Model
 	{
 		return $this->hasMany(IncidentUpdate::class);
 	}
+
+	public function getState()
+	{
+		switch ($this->state) {
+			case 'investigating':
+				return 'Investigating';
+				break;
+
+			case 'update':
+				return 'Update';
+				break;
+
+
+			case 'resolved':
+				return 'Resolved';
+				break;
+			
+			default:
+				return $this->state;
+				break;
+		}
+	}
 }
