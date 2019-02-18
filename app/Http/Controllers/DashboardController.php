@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use App\{
 	Incident,
 	IncidentUpdate,
@@ -13,6 +14,12 @@ use App\{
 
 class DashboardController extends Controller
 {
+	protected $states = [
+		'investigating',
+		'update',
+		'resolved'
+	];
+
 	public function __construct()
 	{
 		$this->middleware('auth');
@@ -58,7 +65,8 @@ class DashboardController extends Controller
 	public function incidentShow(Request $request, $id)
 	{
 		$incident = Incident::with('service')->findOrFail($id);
-		return view('dashboard.incidents.show', compact('incident'));
+		$updates = $incident->updates()->orderByDesc('id')->paginate(10);
+		return view('dashboard.incidents.show', compact('incident', 'updates'));
 	}
 
 	public function incidentCreate(Request $request)
@@ -83,5 +91,42 @@ class DashboardController extends Controller
 		$incident->title = $title;
 		$incident->save();
 		return $incident->url();
+	}
+
+	public function incidentUpdateShow(Request $request, $incidentId, $updateId)
+	{
+		$incident = Incident::findOrFail($incidentId);
+		$update = $incident->updates()->findOrFail($updateId);
+		$services = Service::get();
+		return view('dashboard.incidents.updates.show', compact('incident', 'update', 'services'));
+	}
+
+	public function incidentUpdateStore(Request $request, $incidentId, $updateId)
+	{
+		$this->validate($request, [
+			'description' => 'required|string|min:1',
+			'state' => [
+				'required',
+				'string',
+				Rule::in($this->states)
+			]
+		]);
+
+		$incident = Incident::findOrFail($incidentId);
+		$update = $incident->updates()->findOrFail($updateId);
+		$update->description = $request->input('description');
+		$update->state = $request->input('state');
+		$update->save();
+
+		return redirect($update->dashboardUrl());
+	}
+
+
+	public function incidentUpdateDelete(Request $request, $incidentId, $updateId)
+	{
+		$incident = Incident::findOrFail($incidentId);
+		$update = $incident->updates()->findOrFail($updateId);
+		$update->delete();
+		return redirect($incident->dashboardUrl());
 	}
 }
