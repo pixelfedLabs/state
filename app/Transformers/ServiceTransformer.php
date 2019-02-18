@@ -7,8 +7,6 @@ use League\Fractal;
 
 class ServiceTransformer extends Fractal\TransformerAbstract {
 
-	protected $defaultIncludes = ['incidents'];
-
 	public function transform(Service $service)
 	{
 		return [
@@ -22,9 +20,4 @@ class ServiceTransformer extends Fractal\TransformerAbstract {
 		];
 	}
 
-	public function includeIncidents(Service $service)
-	{
-		$incidents = $service->incidents;
-		return $this->collection($incidents, new IncidentTransformer);
-	}
 }
