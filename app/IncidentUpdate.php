@@ -15,4 +15,22 @@ class IncidentUpdate extends Model
 	{
 		return url("/dashboard/incidents/show/{$this->incident->id}/update/{$this->id}");
 	}
+
+	public function url()
+	{
+		return $this->incident->url();
+	}
+
+	public function getState()
+	{
+		switch ($this->state) {
+			case 'investigating':
+				return 'Investigating';
+				break;
+			
+			default:
+				return $this->state;
+				break;
+		}
+	}
 }
