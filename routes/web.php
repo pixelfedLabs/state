@@ -30,6 +30,9 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('incidents/show/{id}', 'DashboardController@incidentShow');
 	Route::get('incidents/create', 'DashboardController@incidentCreate')->name('dashboard.incidents.create');
 	Route::post('incidents/create', 'DashboardController@incidentStore');
+	Route::get('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateShow');
+	Route::post('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateStore');
+	Route::delete('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateDelete');
 });
 
 Route::get('account/{id}', 'ActivityPubController@profile');
