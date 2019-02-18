@@ -169,6 +169,12 @@ class DashboardController extends Controller
 		$update->state = $request->input('state') ?? 'investigating';
 		$update->save();
 
+		if($request->input('state') == 'resolved') {
+			$incident->state = 'resolved';
+			$incident->resolved_at = now();
+			$incident->save();
+		}
+
 		return redirect($incident->dashboardUrl());
 	}
 
