@@ -4,12 +4,12 @@
 <div class="container">
 	
 	<div class="title text-center py-5">
-		<p class="h1 font-nunito font-weight-bold">Incident on {{$incident->created_at}}</p>
+		<p class="h1 font-nunito font-weight-bold">Incident on {{$incident->created_at}} UTC</p>
 		<p class="h4 font-nunito text-muted">Incident Report for {{$incident->system->name}}</p>
 	</div>
 
 	<div class="incidents-list">
-		@foreach($incident->updates as $update)
+		@foreach($incident->updates()->orderBy('created_at', 'desc')->get() as $update)
 		<div class="row my-3">
 			<div class="col-3 h4 font-weight-bold">{{$update->getState()}}</div>
 			<div class="col-9">
