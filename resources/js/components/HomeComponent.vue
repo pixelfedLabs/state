@@ -105,12 +105,6 @@
     background-color: #e6ebf1;
     z-index: 1;
 }
-
-.incidents-footer {
-	display: block;
-	width: 100%;
-	border-bottom: 3px solid #e6ebf1;
-}
 </style>
 
 <script type="text/javascript">
