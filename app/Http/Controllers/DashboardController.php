@@ -88,9 +88,56 @@ class DashboardController extends Controller
 		$incident->system_id = $service->system->id;
 		$incident->service_id = $service->id;
 		$incident->slug = (string) Str::uuid();
+		$incident->state = 'investigating';
 		$incident->title = $title;
 		$incident->save();
-		return $incident->url();
+
+		$update = new IncidentUpdate;
+		$update->system_id = $service->system->id;
+		$update->service_id = $service->id;
+		$update->incident_id = $incident->id;
+		$update->slug = (string) Str::uuid();
+		$update->state = 'investigating';
+		$update->description = 'We are investigating a potential issue with this service.';
+		$update->save();
+
+		return redirect($incident->dashboardUrl());
+	}
+
+	public function incidentDelete(Request $request, $id)
+	{
+		$incident = Incident::with('updates')->findOrFail($id);
+		foreach($incident->updates as $update) {
+			$update->delete();
+		}
+		$incident->delete();
+		return redirect(route('dashboard.incidents'));
+	}
+
+	public function incidentStatusStore(Request $request, $id)
+	{
+		$this->validate($request, [
+			'description' => 'required|string|min:1',
+			'state' => [
+				'required',
+				'string',
+				Rule::in($this->states)
+			]
+		]);
+
+		$incident = Incident::findOrFail($id);
+		$service = $incident->service;
+
+		$update = new IncidentUpdate;
+		$update->system_id = $service->system->id;
+		$update->service_id = $service->id;
+		$update->incident_id = $incident->id;
+		$update->slug = (string) Str::uuid();
+		$update->description = $request->input('description');
+		$update->state = $request->input('state') ?? 'investigating';
+		$update->save();
+
+		return redirect($incident->dashboardUrl());
 	}
 
 	public function incidentUpdateShow(Request $request, $incidentId, $updateId)
@@ -115,7 +162,7 @@ class DashboardController extends Controller
 		$incident = Incident::findOrFail($incidentId);
 		$update = $incident->updates()->findOrFail($updateId);
 		$update->description = $request->input('description');
-		$update->state = $request->input('state');
+		$update->state = $request->input('state') ?? 'investigating';
 		$update->save();
 
 		return redirect($update->dashboardUrl());
