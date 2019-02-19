@@ -62,5 +62,16 @@
 		</div>
 	</div>
 </div>
+
+<hr>
+
+<div class="float-right">
+	<form method="post">
+		<input type="hidden" name="_method" value="DELETE">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		<button type="submit" class="btn btn-danger btn-sm font-nunito font-weight-bold py-1">Delete System</button>
+	</form>
+</div>
+
 </div>
 @endsection

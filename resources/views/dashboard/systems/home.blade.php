@@ -2,10 +2,15 @@
 
 @section('page')
 <div class="p-md-4">
-	
-<div class="title mb-0">
-	<p class="h3 font-nunito font-weight-bold mb-0">Systems</p>
-	<p class="lead font-nunito mb-0">Manage Systems</p>
+
+<div class="d-flex align-items-center justify-content-between mb-0">
+	<div>
+		<p class="h3 font-nunito font-weight-bold mb-0">Systems</p>
+		<p class="lead font-nunito mb-0">Manage Systems</p>
+	</div>
+	<div>
+		<a class="btn btn-primary font-nunito font-weight-bold" href="{{route('dashboard.systems.create')}}"><i class="fas fa-plus-circle mr-2"></i>New System</a>
+	</div>
 </div>
 <hr>
 
