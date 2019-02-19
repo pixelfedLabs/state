@@ -1879,32 +1879,7 @@ __webpack_require__.r(__webpack_exports__);
         state: 'ok'
       },
       systems: [],
-      services: [{
-        name: 'Website',
-        state: 'ok',
-        lastChecked: false,
-        description: 'Performance of Website and Platform'
-      }, {
-        name: 'API Requests',
-        state: 'ok',
-        lastChecked: false,
-        description: 'Requests for Pixelfed APIs'
-      }, {
-        name: 'Federation Service',
-        state: 'ok',
-        lastChecked: false,
-        description: 'Performance of ActivityPub APIs and Endpoints'
-      }, {
-        name: 'Notification Service',
-        state: 'ok',
-        lastChecked: false,
-        description: 'Performance of Notifications and Real Time Alerts'
-      }, {
-        name: 'Transcode Service',
-        state: 'unknown',
-        lastChecked: false,
-        description: 'Performance of Transcoding Service, responsible for optimizing photos and video'
-      }],
+      services: [],
       incidents: []
     };
   },
