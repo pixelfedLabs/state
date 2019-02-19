@@ -35,7 +35,7 @@
 						</span>
 						<div class="media-body mb-3">
 							<p class="h4 font-weight-bold">{{humanDate(i.date)}}</p>
-							<div v-if="i.incidents.length" v-for="incident in i.incidents" class="card card-body box-shadow">
+							<div v-if="i.incidents.length && index <= 2" v-for="(incident, index) in reverse(i.incidents)" class="card card-body box-shadow mb-2">
 								<div v-if="incident.state == 'resolved'">
 									<p class="lead font-weight-bold">Resolved Incident: {{incident.title}}</p>
 									<p class="mb-0 lead">View <a :href="incident.url">Incident</a> Report</p>
@@ -52,6 +52,9 @@
 										</div>
 									</div>
 								</div>									
+							</div>
+							<div v-if="i.incidents.length > 3">
+								<p class="text-center font-nunito font-weight-bold"><a :href="i.incidents[0].day_url" class="text-muted">View More</a></p>
 							</div>
 							<div v-if="!i.incidents.length" class="lead text-muted font-weight-lighter">
 								No incidents reported.
@@ -222,6 +225,10 @@
 						this.systems = res.data;
 						this.services = this.systems[0].services;
 					})
+			},
+
+			reverse(data) {
+				return _.reverse(data);
 			}
 
 		},
