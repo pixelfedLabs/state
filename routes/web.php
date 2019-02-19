@@ -45,4 +45,8 @@ Route::get('.well-known/webfinger', 'ActivityPubController@webfinger')->name('we
 Route::get('site/about', 'SiteController@about')->name('site.about');
 Route::get('site/subscribe', 'SiteController@subscribe')->name('site.subscribe');
 
+Route::group(['prefix' => 'feeds'], function() {
+	Route::get('system/history.atom', 'SystemController@atomFeed')->name('feed.system.atom');
+});
+
 Route::get('incident/{id}', 'IncidentController@show');
