@@ -11,6 +11,11 @@ class Incident extends Model
 		return url("/incident/{$this->slug}");
 	}
 
+	public function permalink($suffix = null)
+	{
+		return $this->url() . $suffix;
+	}
+
 	public function dashboardUrl()
 	{
 		return url("/dashboard/incidents/show/{$this->id}");
