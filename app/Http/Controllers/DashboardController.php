@@ -81,7 +81,7 @@ class DashboardController extends Controller
 		$system->incidents()->delete();
 		$system->services()->delete();
 		$system->delete();
-		
+
 		return redirect('/dashboard');
 	}
 
@@ -126,6 +126,17 @@ class DashboardController extends Controller
 		$service->save();
 
 		return redirect($service->dashboardUrl());
+	}
+
+	public function serviceDelete(Request $request, $id)
+	{
+		$service = Service::with('updates','incidents')->findOrFail($id);
+
+		$service->updates()->delete();
+		$service->incidents()->delete();
+		$service->delete();
+		
+		return redirect('/dashboard');
 	}
 
 	public function incidents()
