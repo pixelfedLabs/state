@@ -30,4 +30,9 @@ class Service extends Model
 	{
 		return $this->hasMany(Incident::class);
 	}
+
+	public function updates()
+	{
+		return $this->hasMany(IncidentUpdate::class);
+	}
 }
