@@ -26,6 +26,11 @@ class Actor extends Model
 		return $this->hasMany(Follower::class);
 	}
 
+	public function incidents()
+	{
+		return $this->hasMany(Incident::class, 'system_id', 'system_id');
+	}
+
 	public function keyId()
 	{
 		return $this->permalink('#main-key');
