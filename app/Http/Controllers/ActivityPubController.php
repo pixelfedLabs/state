@@ -8,7 +8,8 @@ use League\Fractal;
 use League\Fractal\Serializer\ArraySerializer;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use App\Transformers\{
-	ActivityPubActorTransformer
+	ActivityPubActorTransformer,
+	ActivityPubOutboxTransformer
 };
 
 class ActivityPubController extends Controller
@@ -38,7 +39,10 @@ class ActivityPubController extends Controller
 	public function outbox(Request $request, $id)
 	{
 		$actor = Actor::whereUsername($id)->firstOrFail();
-		return $actor;
+		$res = new Fractal\Resource\Item($actor, new ActivityPubOutboxTransformer);
+		return response()->json($this->fractal->createData($res)->toArray(), 200, [
+			'Content-Type' => 'application/activity+json; charset=utf-8'
+		], JSON_PRETTY_PRINT);
 	}
 
 	public function webfinger(Request $request)
