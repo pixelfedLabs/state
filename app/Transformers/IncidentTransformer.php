@@ -18,7 +18,8 @@ class IncidentTransformer extends Fractal\TransformerAbstract {
 			'title' => $incident->title,
 			'state' => $incident->state,
 			'day' => $incident->created_at->format('m-d-Y'),
-			'resolved_at' => $incident->resolved_at
+			'resolved_at' => $incident->resolved_at,
+			'day_url' => $incident->dayUrl()
 		];
 	}
 
