@@ -20,21 +20,30 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'dashboard'], function() {
 	Route::redirect('/', '/dashboard/home');
 	Route::get('home', 'DashboardController@home')->name('dashboard.home');
+
+	// Systems
 	Route::get('systems', 'DashboardController@systems')->name('dashboard.systems');
 	Route::get('systems/create', 'DashboardController@systemCreate')->name('dashboard.systems.create');
 	Route::post('systems/create', 'DashboardController@systemStore');
 	Route::get('systems/show/{id}', 'DashboardController@systemShow');
 	Route::delete('systems/show/{id}', 'DashboardController@systemDelete');
+
+	// Services
 	Route::get('services', 'DashboardController@services')->name('dashboard.services');
 	Route::get('services/create', 'DashboardController@serviceCreate')->name('dashboard.services.create');
 	Route::post('services/create', 'DashboardController@serviceStore');
 	Route::get('services/show/{id}', 'DashboardController@serviceShow');
+	Route::delete('services/show/{id}', 'DashboardController@serviceDelete');
+
+	// Incidents
 	Route::get('incidents', 'DashboardController@incidents')->name('dashboard.incidents');
+	Route::get('incidents/create', 'DashboardController@incidentCreate')->name('dashboard.incidents.create');
+	Route::post('incidents/create', 'DashboardController@incidentStore');
 	Route::get('incidents/show/{id}', 'DashboardController@incidentShow');
 	Route::post('incidents/show/{id}', 'DashboardController@incidentStatusStore');
 	Route::delete('incidents/show/{id}', 'DashboardController@incidentDelete');
-	Route::get('incidents/create', 'DashboardController@incidentCreate')->name('dashboard.incidents.create');
-	Route::post('incidents/create', 'DashboardController@incidentStore');
+
+	// Incident Updates
 	Route::get('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateShow');
 	Route::post('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateStore');
 	Route::delete('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateDelete');
