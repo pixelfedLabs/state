@@ -44,6 +44,47 @@ class DashboardController extends Controller
 		return view('dashboard.systems.show', compact('system'));
 	}
 
+	public function systemCreate()
+	{
+		return view('dashboard.systems.create');
+	}
+
+	public function systemStore(Request $request)
+	{
+		$this->validate($request, [
+			'name'	=> 'required|string|max:40',
+			'description' => 'nullable|string|max:150',
+			'website'	=> 'nullable|url',
+			'active' => 'nullable'
+		]);
+
+		$name = $request->input('name');
+		$description = $request->input('description');
+		$website = $request->input('website');
+		$active = $request->input('active') == 'on';
+
+		$system = new System;
+		$system->name = $name;
+		$system->description = $description;
+		$system->website = $website;
+		$system->active = $active;
+		$system->save();
+
+		return redirect($system->dashboardUrl());
+	}
+
+	public function systemDelete(Request $request, $id)
+	{
+		$system = System::with('updates','incidents','services')->findOrFail($id);
+
+		$system->updates()->delete();
+		$system->incidents()->delete();
+		$system->services()->delete();
+		$system->delete();
+		
+		return redirect('/dashboard');
+	}
+
 	public function services()
 	{
 		$services = Service::orderByDesc('id')->paginate(10);
@@ -60,7 +101,6 @@ class DashboardController extends Controller
 	{
 		return view('dashboard.services.create');
 	}
-
 
 	public function serviceStore(Request $request)
 	{
