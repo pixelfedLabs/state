@@ -3,12 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cache;
 
 class Incident extends Model
 {
 	public function url()
 	{
 		return url("/incident/{$this->slug}");
+	}
+
+	public function dayUrl()
+	{
+		$year = $this->created_at->format('Y');
+		$month = $this->created_at->format('m');
+		$day = $this->created_at->format('d');
+		$system = $this->system->id;
+		$slug = $this->service->slug;
+		return url("/history/{$system}/{$slug}/{$year}/{$month}/{$day}");
 	}
 
 	public function permalink($suffix = null)
