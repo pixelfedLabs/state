@@ -52,4 +52,10 @@ class Incident extends Model
 				break;
 		}
 	}
+
+	public function atomTag()
+	{
+		$domain = parse_url(config('app.url'), PHP_URL_HOST);
+		return "tag:{$domain},2005:Incident/{$this->id}";
+	}
 }
