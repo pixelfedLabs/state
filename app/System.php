@@ -25,4 +25,9 @@ class System extends Model
 	{
 		return $this->hasMany(IncidentUpdate::class);
 	}
+
+	public function actor()
+	{
+		return $this->hasOne(Actor::class);
+	}
 }
