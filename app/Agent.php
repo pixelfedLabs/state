@@ -30,4 +30,9 @@ class Agent extends Model
 	{
 		return $this->frequency . ' minutes';
 	}
+
+	public function checks()
+	{
+		return $this->hasMany(AgentCheck::class);
+	}
 }
