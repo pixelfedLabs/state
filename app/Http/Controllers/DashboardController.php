@@ -266,9 +266,10 @@ class DashboardController extends Controller
 		return redirect($incident->dashboardUrl());
 	}
 
-	public function agents()
+	public function agents(Request $request)
 	{
-		return view('dashboard.agents.home');
+		$agents = Agent::orderByDesc('id')->paginate(10);
+		return view('dashboard.agents.home', compact('agents'));
 	}
 
 	public function agentCreate(Request $request)
@@ -303,5 +304,11 @@ class DashboardController extends Controller
 		$agent->save();
 
 		return redirect($agent->url());
+	}
+
+	public function agentShow(Request $request, $id)
+	{
+		$agent = Agent::findOrFail($id);
+		return view('dashboard.agents.show', compact('agent'));
 	}
 }
