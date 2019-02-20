@@ -26,6 +26,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        //$schedule->command('agent:run --frequency=1')->everyMinute();
+        $schedule->command('agent:run --frequency=5')->everyFiveMinutes();
+        $schedule->command('agent:run --frequency=15')->everyFifteenMinutes();
     }
 
     /**
