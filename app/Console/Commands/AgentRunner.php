@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Jobs\AgentMonitorCheck;
+use App\Agent;
 
 class AgentRunner extends Command
 {
@@ -38,6 +40,12 @@ class AgentRunner extends Command
      */
     public function handle()
     {
-        $freq = $this->option('frequency');
+        $freq = (int) $this->option('frequency');
+
+        $agents = Agent::whereFrequency($freq)->get();
+
+        foreach($agents as $agent) {
+            AgentMonitorCheck::dispatchNow($agent);
+        }
     }
 }
