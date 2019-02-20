@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\{
+	Agent,
 	Incident,
 	IncidentUpdate,
 	Service,
@@ -257,12 +258,50 @@ class DashboardController extends Controller
 		return redirect($update->dashboardUrl());
 	}
 
-
 	public function incidentUpdateDelete(Request $request, $incidentId, $updateId)
 	{
 		$incident = Incident::findOrFail($incidentId);
 		$update = $incident->updates()->findOrFail($updateId);
 		$update->delete();
 		return redirect($incident->dashboardUrl());
+	}
+
+	public function agents()
+	{
+		return view('dashboard.agents.home');
+	}
+
+	public function agentCreate(Request $request)
+	{
+		return view('dashboard.agents.create');
+	}
+
+	public function agentStore(Request $request)
+	{
+		$this->validate($request, [
+			'service' => 'required|integer|exists:services,id',
+			'name' => 'nullable|string|max:40',
+			'description' => 'nullable|string|max:150',
+			'check_url' => 'required|url|unique:agents',
+			'check_text' => 'nullable|string|max:150',
+			'frequency' => 'required|integer|min:5|max:60',
+			'active' => 'nullable|string'
+		]);
+
+		$service = Service::with('system')->findOrFail($request->input('service'));
+
+		$agent = new Agent;
+		$agent->slug = (string) Str::uuid();
+		$agent->system_id = $service->system->id;
+		$agent->service_id = $service->id;
+		$agent->name = $request->input('name');
+		$agent->description = $request->input('description');
+		$agent->check_url = $request->input('check_url');
+		$agent->check_text = $request->input('check_text');
+		$agent->frequency = $request->input('frequency');
+		$agent->active = $request->input('active') == 'on';
+		$agent->save();
+
+		return redirect($agent->url());
 	}
 }
