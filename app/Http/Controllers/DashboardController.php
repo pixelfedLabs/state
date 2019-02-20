@@ -309,6 +309,43 @@ class DashboardController extends Controller
 	public function agentShow(Request $request, $id)
 	{
 		$agent = Agent::findOrFail($id);
-		return view('dashboard.agents.show', compact('agent'));
+		$checks = $agent->checks()->orderByDesc('id')->take(8)->get();
+		return view('dashboard.agents.show', compact('agent', 'checks'));
+	}
+
+	public function agentUpdate(Request $request, $id)
+	{
+		$this->validate($request, [
+			'service' => 'required|integer|exists:services,id',
+			'name' => 'nullable|string|max:40',
+			'description' => 'nullable|string|max:150',
+			'check_url' => 'required|url|unique:agents',
+			'check_text' => 'nullable|string|max:150',
+			'frequency' => 'required|integer|min:5|max:60',
+			'active' => 'nullable|string'
+		]);
+
+		$agent = Agent::findOrFail($id);
+		$agent->slug = (string) Str::uuid();
+		$agent->system_id = $service->system->id;
+		$agent->service_id = $service->id;
+		$agent->name = $request->input('name');
+		$agent->description = $request->input('description');
+		$agent->check_url = $request->input('check_url');
+		$agent->check_text = $request->input('check_text');
+		$agent->frequency = $request->input('frequency');
+		$agent->active = $request->input('active') == 'on';
+		$agent->save();
+
+		return redirect($agent->url());
+	}
+
+	public function agentDelete(Request $request, $id)
+	{
+		$agent = Agent::findOrFail($id);
+		$agent->checks()->delete();
+		$agent->delete();
+
+		return redirect(route('dashboard.agents'));
 	}
 }
