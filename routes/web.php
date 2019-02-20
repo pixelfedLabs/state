@@ -52,6 +52,7 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('agents', 'DashboardController@agents')->name('dashboard.agents');
 	Route::get('agents/create', 'DashboardController@agentCreate')->name('dashboard.agents.create');
 	Route::post('agents/create', 'DashboardController@agentStore');
+	Route::get('agents/show/{id}', 'DashboardController@agentShow');
 });
 
 Route::get('account/{id}', 'ActivityPubController@profile');
