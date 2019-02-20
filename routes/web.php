@@ -47,6 +47,11 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateShow');
 	Route::post('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateStore');
 	Route::delete('incidents/show/{incidentId}/update/{updatedId}', 'DashboardController@incidentUpdateDelete');
+
+	// Agents
+	Route::get('agents', 'DashboardController@agents')->name('dashboard.agents');
+	Route::get('agents/create', 'DashboardController@agentCreate')->name('dashboard.agents.create');
+	Route::post('agents/create', 'DashboardController@agentStore');
 });
 
 Route::get('account/{id}', 'ActivityPubController@profile');
