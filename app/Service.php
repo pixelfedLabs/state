@@ -11,6 +11,11 @@ class Service extends Model
 		return url("/service/{$this->id}/{$this->slug}");
 	}
 
+	public function uptimeUrl()
+	{
+		return url("/service/{$this->id}/{$this->slug}/uptime");
+	}
+
 	public function dashboardUrl()
 	{
 		return url("/dashboard/services/show/{$this->id}");
