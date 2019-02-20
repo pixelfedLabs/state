@@ -53,6 +53,8 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('agents/create', 'DashboardController@agentCreate')->name('dashboard.agents.create');
 	Route::post('agents/create', 'DashboardController@agentStore');
 	Route::get('agents/show/{id}', 'DashboardController@agentShow');
+	Route::post('agents/show/{id}', 'DashboardController@agentUpdate');
+	Route::delete('agents/show/{id}', 'DashboardController@agentDelete');
 });
 
 Route::get('account/{id}', 'ActivityPubController@profile');
