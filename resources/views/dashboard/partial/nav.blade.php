@@ -12,7 +12,7 @@
 		<a class="nav-link font-nunito {{request()->is('dashboard/incidents*')?'active':''}}" href="{{route('dashboard.incidents')}}">Incidents</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link font-nunito disabled" href="#" tabindex="-1" aria-disabled="true">Agents</a>
+		<a class="nav-link font-nunito {{request()->is('dashboard/agents*')?'active':''}}" href="{{route('dashboard.agents')}}">Agents</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link font-nunito disabled" href="#" tabindex="-1" aria-disabled="true">Workers</a>
