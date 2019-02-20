@@ -18,7 +18,7 @@
 		<div class="card">
 			<div class="card-body align-middle">
 				<div class="py-3 text-center">
-					<p class="display-4 font-nunito mb-0">0</p>
+					<p class="display-4 font-nunito mb-0">{{App\Agent::whereActive(true)->count()}}</p>
 					<p class="font-nunito font-weight-bold text-muted mb-0">Active Agents</p>
 				</div>
 			</div>
@@ -43,26 +43,21 @@
       <th scope="col">Name</th>
       <th scope="col">Monitor URL</th>
       <th scope="col">Frequency</th>
-      <th scope="col">Active</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
+  	@foreach($agents as $agent)
     <tr>
       <th scope="row">
-      	<a href="#">1</a>
+      	<a href="{{$agent->url()}}">{{$agent->id}}</a>
       </th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>Otto</td>
-      <td>Otto</td>
+      <td>{{$agent->name}}</td>
+      <td>{{$agent->check_url}}</td>
+      <td>{{$agent->humanFrequency()}}</td>
+      <td>{{$agent->active ? 'active' : 'inactive'}}</td>
     </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>the Bird</td>
-      <td>the Bird</td>
-    </tr>
+    @endforeach
   </tbody>
 </table>
 
