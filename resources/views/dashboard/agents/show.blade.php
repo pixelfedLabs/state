@@ -15,6 +15,11 @@
 <hr>
 
 <div class="row">
+	<div class="col-12">
+		<div class="pb-4">
+			<uptime-graph></uptime-graph>
+		</div>
+	</div>
 	<div class="col-12 col-md-6 mb-3">
 		<div class="card">
 			<div class="card-header bg-light font-nunito font-weight-bold">History</div>
@@ -52,29 +57,29 @@
 							@endforeach
 						</select>
 					</div>
-					<div class="form-group pb-4">
+					<div class="form-group pb-2">
 						<label class="font-nunito">Name</label>
 						<input type="text" class="form-control" name="name" placeholder="Agent Name (ex: Website)" autocomplete="off" value="{{$agent->name}}">
 					</div>
-					<div class="form-group pb-4">
+					{{-- <div class="form-group pb-4">
 						<label class="font-nunito">Description</label>
 						<textarea class="form-control" name="description" placeholder="Optional description of the agent" rows="4">{{$agent->description}}</textarea>
-					</div>
-					<div class="form-group pb-4">
+					</div> --}}
+					<div class="form-group pb-2">
 						<label class="font-nunito">Monitor URL</label>
 						<input type="text" class="form-control" name="check_url" placeholder="https://mywebsite.test/health-check" autocomplete="off" value="{{$agent->check_url}}">
 					</div>
-					<div class="form-group pb-4">
+					<div class="form-group pb-2">
 						<label class="font-nunito">Monitor Text</label>
 						<input type="text" class="form-control" name="check_text" placeholder="Hi, we're online and ready to help!" autocomplete="off" value="{{$agent->check_text}}">
 						<p class="form-text small text-muted">Optional text or phrase on the page to detect if it's online.</p>
 					</div>
-					<div class="form-group pb-4">
+					<div class="form-group pb-2">
 						<label class="font-nunito">Check Frequency</label>
 						<input type="range" class="custom-range" name="frequency" id="freq" min="5" max="60" step="5" value="{{$agent->frequency}}">
 						<p class="form-text small text-muted">
 							<span>Check every: </span>
-							<span id="freqLabel" class="font-nunito font-weight-bold">15 minutes</span>
+							<span id="freqLabel" class="font-nunito font-weight-bold">{{$agent->frequency}} minutes</span>
 						</p>
 					</div>
 					<div class="form-group pb-4">
