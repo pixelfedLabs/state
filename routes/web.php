@@ -55,6 +55,7 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::get('agents/show/{id}', 'DashboardController@agentShow');
 	Route::post('agents/show/{id}', 'DashboardController@agentUpdate');
 	Route::delete('agents/show/{id}', 'DashboardController@agentDelete');
+	Route::get('agents/show/{agent_id}/check/{check_id}', 'DashboardController@agentCheckShow');
 });
 
 Route::get('account/{id}', 'ActivityPubController@profile');
@@ -67,6 +68,10 @@ Route::get('site/subscribe', 'SiteController@subscribe')->name('site.subscribe')
 
 Route::group(['prefix' => 'feeds'], function() {
 	Route::get('system/history.atom', 'SystemController@atomFeed')->name('feed.system.atom');
+});
+
+Route::group(['prefix' => 'api/v2'], function() {
+	Route::get('agents', 'AdminApiController@agents');
 });
 
 Route::get('incident/{id}', 'IncidentController@show');
