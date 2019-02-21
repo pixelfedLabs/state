@@ -25,11 +25,9 @@
 		</div>
 	</div>
 	<div class="col-12 col-md-8">
-		<div class="card box-shadow">
-			<div class="card-body align-middle py-3">
-
-			</div>
-			<div class="mx-5 py-1">
+		<div class="card">
+			<div class="card-body text-center">
+				<p class="text-muted py-5 mb-0">Something important will go here.</p>
 			</div>
 		</div>
 	</div>

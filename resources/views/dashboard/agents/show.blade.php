@@ -27,7 +27,7 @@
 				@foreach($checks as $check)
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div>
-						<a class="font-weight-bold mr-3" href="#">{{$check->id}}</a>
+						<a class="font-weight-bold mr-3" href="{{$check->url()}}">{{$check->id}}</a>
 						<span class="text-muted font-weight-lighter">Uptime Check</span>
 					</div>
 					<div>
