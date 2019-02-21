@@ -22,4 +22,14 @@ class AgentCheck extends Model
 	{
 		return $this->belongsTo(Agent::class);
 	}
+
+	public function url()
+	{
+		return $this->dashboardUrl();
+	}
+
+	public function dashboardUrl()
+	{
+		return url("/dashboard/agents/show/{$this->agent_id}/check/{$this->id}");
+	}
 }
