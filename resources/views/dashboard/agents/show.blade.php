@@ -72,9 +72,9 @@
 					<div class="form-group pb-2">
 						<label class="font-nunito">Monitor Text</label>
 						<input type="text" class="form-control" name="check_text" placeholder="Hi, we're online and ready to help!" autocomplete="off" value="{{$agent->check_text}}">
-						<p class="form-text small text-muted">Optional text or phrase on the page to detect if it's online.</p>
+						<p class="form-text small text-muted mb-0">Optional text or phrase on the page to detect if it's online.</p>
 					</div>
-					<div class="form-group pb-2">
+					<div class="form-group pb-0">
 						<label class="font-nunito">Check Frequency</label>
 						<input type="range" class="custom-range" name="frequency" id="freq" min="5" max="60" step="5" value="{{$agent->frequency}}">
 						<p class="form-text small text-muted">
@@ -82,7 +82,7 @@
 							<span id="freqLabel" class="font-nunito font-weight-bold">{{$agent->frequency}} minutes</span>
 						</p>
 					</div>
-					<div class="form-group pb-4">
+					<div class="form-group pb-0">
 						<div class="custom-control custom-switch">
 							<input type="checkbox" class="custom-control-input" name="active" id="isActive" {{$agent->active?'checked':''}}>
 							<label class="custom-control-label" for="isActive">
