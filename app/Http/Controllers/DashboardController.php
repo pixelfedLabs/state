@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\{
 	Agent,
+	AgentCheck,
 	Incident,
 	IncidentUpdate,
 	Service,
@@ -347,5 +348,13 @@ class DashboardController extends Controller
 		$agent->delete();
 
 		return redirect(route('dashboard.agents'));
+	}
+
+	public function agentCheckShow(Request $request, $agent_id, $check_id)
+	{
+		$agent = Agent::findOrFail($agent_id);
+		$check = AgentCheck::findOrFail($check_id);
+		$headers = $check->headers ? json_decode($check->headers, true) : [];
+		return view('dashboard.agents.check_show', compact('check', 'agent', 'headers'));
 	}
 }
