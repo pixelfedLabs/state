@@ -11,6 +11,11 @@ class System extends Model
 		return url("/dashboard/systems/show/{$this->id}");
 	}
 
+	public function url()
+	{
+		return $this->dashboardUrl();
+	}
+
 	public function services()
 	{
 		return $this->hasMany(Service::class);		
