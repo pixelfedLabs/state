@@ -18,6 +18,9 @@
 		<a class="nav-link font-nunito disabled" href="#" tabindex="-1" aria-disabled="true">Workers</a>
 	</li>
 	<li class="nav-item">
+		<a class="nav-link font-nunito" href="#">Notifications</a>
+	</li>
+	<li class="nav-item">
 		<a class="nav-link font-nunito disabled" href="#" tabindex="-1" aria-disabled="true">Settings</a>
 	</li>
 </ul>
