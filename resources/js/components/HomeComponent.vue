@@ -11,15 +11,18 @@
 
 	<div class="my-5">
 		<h2 class="pb-2 font-nunito font-weight-bold">Current Status</h2>
-		<div class="list-group box-shadow">
-			<div class="list-group-item d-flex justify-content-between py-3" v-for="(service, index) in services">
-				<div>
-					<span class="lead font-weight-bold mr-2">{{service.name}}</span>
-					<span data-toggle="tooltip" :title="service.tooltip"><i class="far fa-question-circle"></i></span>
+		<div class="list-group">
+			<div class="list-group-item py-3" v-for="(service, index) in services">
+				<div class="d-flex justify-content-between">
+					<div>
+						<span class="lead font-weight-bold mr-2">{{service.name}}</span>
+						<span data-toggle="tooltip" :title="service.tooltip"><i class="far fa-question-circle"></i></span>
+					</div>
+					<div v-html="stateToText(service.state)">
+						Loading...
+					</div>
 				</div>
-				<div v-html="stateToText(service.state)">
-					Loading...
-				</div>
+				<uptime-graph :id="service.agent"></uptime-graph>
 			</div>
 		</div>
 	</div>
@@ -121,11 +124,11 @@
 				systems: [],
 				services: [],
 				incidents: []
+
 			}
 		},
 
 		beforeMount() {
-			this.fetchIncidents();
 			this.fetchSystems();
 		},
 
@@ -138,6 +141,11 @@
 					this.systemHealthToggle(item.state);
 				}
 			});
+
+			let self = this;
+			setInterval(function() {
+				self.fetchSystems();
+			},1000 * 60 * 15);
 		},
 
 		updated() {
@@ -224,12 +232,13 @@
 					.then(res => {
 						this.systems = res.data;
 						this.services = this.systems[0].services;
+						this.fetchIncidents();
 					})
 			},
 
 			reverse(data) {
 				return _.reverse(data);
-			}
+			},
 
 		},
 	}
