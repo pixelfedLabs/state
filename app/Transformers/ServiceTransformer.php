@@ -16,7 +16,8 @@ class ServiceTransformer extends Fractal\TransformerAbstract {
 			'description' => $service->description,
 			'tooltip' => $service->tooltip,
 			'active' => (bool) $service->active,
-			'state' => 'ok'
+			'state' => 'ok',
+			'agent' => $service->agents->count() > 0 ? $service->agents->first()->slug : null
 		];
 	}
 
