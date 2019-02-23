@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Cache;
 use \Carbon\Carbon;
 use App\{
+	Agent,
+	AgentCheck,
 	Actor,
 	Incident,
 	IncidentUpdate,
@@ -53,5 +56,60 @@ class ApiController extends Controller
 		}
 
 		return $incidents;
+	}
+
+	public function serviceUptime(Request $request, $agentId)
+	{
+		$this->validate($request, [
+			'days' => 'nullable|integer|min:30|max:90',
+		]);
+		$agent = Agent::whereActive(true)->whereSlug($agentId)->firstOrFail();
+		$days = $request->input('days') ?? 90;
+		$res = Cache::remember('api:agent:uptime:id-'.$agent->id.':days-'.$days, 15, function() use($agent, $days) {
+			$incidents = collect([]);
+			$periods = collect(\Carbon\CarbonPeriod::create(now()->subDays($days), now()));
+			foreach($periods as $i => $period) {
+				$day = $period->format('Y-m-d');
+				$checks = AgentCheck::whereAgentId($agent->id)
+					->whereDate('created_at', $day)
+					->count();
+				$count = AgentCheck::whereAgentId($agent->id)
+					->whereDate('created_at', $day)
+					->whereOnline(false)
+					->count();
+				$frequency = $agent->frequency;
+				$url = '/uptime/'.$agent->slug.'/'.$period->format('Y').'/'.$period->format('m').'/'.$period->format('d');
+				if($checks == 0) {
+					$class = 'ug state-nodata';
+					$downtime = 0;
+					$uptime_percent = 0;
+					$url = null;
+				} else {
+					$class = 'ug';
+					$downtime = $count > 1 ? $count * $frequency : 0;
+					$uptime_percent = "100";
+				}
+				if($downtime != 0) {
+					$uptime_percent = ((1440 - $downtime) / 1440) * 100;
+					$class = 'ug state-degraded';
+					$p = floor($uptime_percent);
+					if($p < 96) {
+						$class = 'ug state-outage';
+					}
+				}
+				$incidents->push([
+					'daysAgo' => $days--,
+					'url' => $url,
+					'state' => 'ok',
+					'date' => $day,
+					'class' => $class,
+					'downtime_minutes' => $downtime,
+					'uptime_percent' => number_format($uptime_percent,0)
+				]);
+			}
+
+			return $incidents->reverse();
+		});
+		return response()->json($res);
 	}
 }
