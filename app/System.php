@@ -35,4 +35,9 @@ class System extends Model
 	{
 		return $this->hasOne(Actor::class);
 	}
+
+	public function agents()
+	{
+		return $this->hasMany(Agent::class);
+	}
 }
