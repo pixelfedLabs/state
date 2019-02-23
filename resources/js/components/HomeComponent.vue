@@ -46,10 +46,10 @@
 								<div v-if="incident.state != 'resolved' && incident.updates.length">
 									<p class="lead font-weight-bold">Incident: {{incident.title}}</p>
 									<div v-for="update in incident.updates" class="row mt-3">
-										<div class="col-3">
+										<div class="col-12 col-md-3">
 											<div class="font-weight-bold">{{update.state}}</div>
 										</div>
-										<div class="col-9">
+										<div class="col-12 col-md-9">
 										<div>{{update.description}}</div>
 										<p class="small mb-0"><a :href="update.url" class="text-muted">{{update.created_at}}</a></p>
 										</div>
