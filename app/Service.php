@@ -40,4 +40,9 @@ class Service extends Model
 	{
 		return $this->hasMany(IncidentUpdate::class);
 	}
+
+	public function agents()
+	{
+		return $this->hasMany(Agent::class);
+	}
 }
