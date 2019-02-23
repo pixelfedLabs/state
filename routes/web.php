@@ -70,8 +70,11 @@ Route::group(['prefix' => 'feeds'], function() {
 	Route::get('system/history.atom', 'SystemController@atomFeed')->name('feed.system.atom');
 });
 
+Route::get('api/v1/services/uptime/{agentId}', 'ApiController@serviceUptime');
+
 Route::group(['prefix' => 'api/v2'], function() {
 	Route::get('agents', 'AdminApiController@agents');
 });
 
 Route::get('incident/{id}', 'IncidentController@show');
+Route::get('uptime/{slug}/{year}/{month}/{day}', 'AgentCheckController@show');
