@@ -12,6 +12,7 @@ use App\Transformers\{
 	ActivityPubOutboxTransformer
 };
 use App\Jobs\InboxWorker;
+use App\Util\ActivityPub\ActivityPubHelpers as AP;
 
 class ActivityPubController extends Controller
 {
@@ -60,7 +61,7 @@ class ActivityPubController extends Controller
 			return response('');
 		}
 		$hash = hash('sha256', $resource);
-		$parsed = $this->normalizeProfileUrl($resource);
+		$parsed = AP::normalizeProfileUrl($resource);
 		$username = $parsed['username'];
 		$actor = Actor::whereUsername($username)->firstOrFail();
 		$links = [
@@ -78,35 +79,4 @@ class ActivityPubController extends Controller
 		return response()->json($webfinger, 200, [], JSON_PRETTY_PRINT);
 	}
 
-	public function normalizeProfileUrl($url)
-	{
-		if (starts_with($url, 'acct:')) {
-			$url = str_replace('acct:', '', $url);
-		}
-
-		if (!str_contains($url, '@') && filter_var($url, FILTER_VALIDATE_URL)) {
-			$parsed = parse_url($url);
-			$username = str_replace(['/', '\\', '@'], '', $parsed['path']);
-
-			return ['domain' => $parsed['host'], 'username' => $username];
-		}
-		$parts = explode('@', $url);
-		$username = null;
-		$domain = null;
-
-		foreach ($parts as $part) {
-			if (empty($part)) {
-				continue;
-			}
-			if (str_contains($part, '.')) {
-				$domain = filter_var($part, FILTER_VALIDATE_URL) ?
-				parse_url($part, PHP_URL_HOST) :
-				$part;
-			} else {
-				$username = $part;
-			}
-		}
-
-		return ['domain' => $domain, 'username' => $username];
-	}
 }
