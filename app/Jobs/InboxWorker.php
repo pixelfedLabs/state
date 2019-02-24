@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Log;
 use App\Agent;
 use App\Follower;
 use App\Util\ActivityPub\ActivityPubHelpers as AP;
@@ -47,7 +48,7 @@ class InboxWorker implements ShouldQueue
         if($this->body['type'] == 'Follow') {
             $this->verifySignature();
         } else {
-            abort(400, 'Invalid AP Verb.');
+            Log::info('Invalid AP Verb.');
             exit;
         }
     }
@@ -57,7 +58,7 @@ class InboxWorker implements ShouldQueue
         $url = AP::validateUrl($this->body['actor']);
         $actor = AP::fetchFromUrl($url);
         if(!$actor) {
-            abort(400, 'Invalid Actor');
+            Log::info('Invalid Actor');
             exit;
         }
         $publicKey = openssl_pkey_get_public($actor['publicKey']['publicKeyPem']);
@@ -69,7 +70,7 @@ class InboxWorker implements ShouldQueue
             $this->actor = $actor;
             $this->handleVerb();
         } else {
-            abort(400, 'Invalid Signature');
+            Log::info('Invalid Signature');
             exit;
         }
     }
