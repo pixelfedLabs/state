@@ -287,7 +287,6 @@ class DashboardController extends Controller
 		]);
 
 		$agent = Agent::findOrFail($id);
-		$agent->slug = (string) Str::uuid();
 		$agent->service_id = $agent->service->id;
 		$agent->name = $request->input('name');
 		$agent->description = $request->input('description');
