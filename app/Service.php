@@ -35,4 +35,9 @@ class Service extends Model
 	{
 		return $this->hasMany(Agent::class);
 	}
+
+	public function actor()
+	{
+		return $this->hasOne(Actor::class);
+	}
 }

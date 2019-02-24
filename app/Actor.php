@@ -11,6 +11,11 @@ class Actor extends Model
 		return url("/account/{$this->username}");
 	}
 
+	public function emailUrl()
+	{
+		return "@{$this->username}@".parse_url($this->url(), PHP_URL_HOST);
+	}
+
 	public function service()
 	{
 		return $this->hasOne(Service::class, 'id');

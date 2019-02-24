@@ -50,6 +50,10 @@
 				<p class="lead font-nunito mb-0">{{$service->description}}</p>
 				<p class="small text-muted mb-0">DESCRIPTION</p>
 			</li>
+			<li class="list-group-item text-center">
+				<p class="lead font-nunito mb-0"><a href="{{$service->actor->url()}}">{{$service->actor->emailUrl()}}</a></p>
+				<p class="small text-muted mb-0">FEDIVERSE PROFILE</p>
+			</li>
 
 		</ul>
 	</div>
