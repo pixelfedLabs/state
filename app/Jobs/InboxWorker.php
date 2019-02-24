@@ -31,7 +31,7 @@ class InboxWorker implements ShouldQueue
     {
         $this->agent = $agent;
         $this->headers = $headers;
-        $this->body = json_decode($body, true, 8);
+        $this->body = $body;
         $this->signature = $signature;
     }
 
@@ -57,7 +57,8 @@ class InboxWorker implements ShouldQueue
 
     protected function verifySignature()
     {
-        $url = AP::validateUrl($this->body['actor']);
+        $body = json_decode($this->body, true, 8);
+        $url = AP::validateUrl($body['actor']);
         $actor = AP::fetchFromUrl($url);
         if(!$actor) {
             Log::info('Invalid Actor');
