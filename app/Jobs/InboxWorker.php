@@ -117,11 +117,11 @@ class InboxWorker implements ShouldQueue
         $actor = $follower;
         $accept = [
             '@context' => 'https://www.w3.org/ns/activitystreams',
-            'id'       => $target->permalink().'#accepts/follows/' . $follower->id,
+            'id'       => $body['id'],
             'type'     => 'Accept',
             'actor'    => $target->permalink(),
             'object'   => [
-                'id' => $body['id'],
+                'id' => $actor->profile_url . '#follows/' . $follower->id,
                 'type'  => 'Follow',
                 'actor' => $actor->profile_url,
                 'object' => $target->permalink()
