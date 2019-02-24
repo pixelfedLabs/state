@@ -11,6 +11,7 @@ use Log;
 use App\Agent;
 use App\Follower;
 use App\Util\ActivityPub\ActivityPubHelpers as AP;
+use Illuminate\Support\Str;
 
 class InboxWorker implements ShouldQueue
 {
@@ -117,10 +118,10 @@ class InboxWorker implements ShouldQueue
         $actor = $follower;
         $accept = [
             '@context' => 'https://www.w3.org/ns/activitystreams',
-            'id'       => $target->permalink().'#accepts/follows/' . $follower->id,
+            'id'       => $target->permalink().'#accepts/follows/' . (string) Str::uuid(),
             'type'     => 'Accept',
             'actor'    => $target->permalink(),
-            'object'   => $body['id']
+            'object'   => $body
         ];
         $to = $actor->inbox_url;
         AP::sendSignedObject($target, $to, $accept);
