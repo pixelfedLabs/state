@@ -19,4 +19,4 @@ Route::group(['prefix' => 'api/v1'], function() {
 	Route::get('incidents', 'ApiController@incidents');
 });
 
-Route::post('accounts/{username}/inbox', 'ActivityPubController@inbox');
+Route::post('account/{username}/inbox', 'ActivityPubController@inbox');
