@@ -130,6 +130,7 @@ class InboxWorker implements ShouldQueue
             ]
         ];
         $to = $actor->sharedInboxUrl ?? $actor->inboxUrl;
-        AP::sendSignedObject($target, $to, $accept);
+        $res = AP::sendSignedObject($target, $to, $accept);
+        Log::info($res);
     }
 }

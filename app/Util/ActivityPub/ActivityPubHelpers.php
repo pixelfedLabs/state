@@ -156,6 +156,6 @@ class ActivityPubHelpers {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 		curl_setopt($ch, CURLOPT_HEADER, true);
 		$response = curl_exec($ch);
-		return;
+		return $response;
 	}
 }
