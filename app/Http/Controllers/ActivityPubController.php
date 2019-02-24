@@ -11,6 +11,7 @@ use App\Transformers\{
 	ActivityPubActorTransformer,
 	ActivityPubOutboxTransformer
 };
+use App\Jobs\InboxWorker;
 
 class ActivityPubController extends Controller
 {
@@ -31,9 +32,11 @@ class ActivityPubController extends Controller
 		], JSON_PRETTY_PRINT);
 	}
 
-	public function inbox(Request $request)
+	public function inbox(Request $request, $username)
 	{
-
+		$agent = Actor::whereUsername($username)->firstOrFail();
+		InboxWorker::dispatchNow($agent, $request->headers(), $request->getContent());
+		return response()->json([], 200);
 	}
 
 	public function outbox(Request $request, $id)
