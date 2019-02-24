@@ -23,10 +23,6 @@
 			</div>
 			<div class="list-group">
 				<div class="list-group-item">
-					<span class="font-weight-bold pr-3">System</span>
-					<span class="word-break"><a href="{{$agent->system->url()}}">{{$agent->system->name}}</a></span>
-				</div>
-				<div class="list-group-item">
 					<span class="font-weight-bold pr-3">Service</span>
 					<span class="word-break"><a href="{{$agent->service->url()}}">{{$agent->service->name}}</a></span>
 				</div>
