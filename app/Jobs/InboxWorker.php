@@ -68,7 +68,7 @@ class InboxWorker implements ShouldQueue
         $inputHeaders = $this->headers;
         $inboxPath = "/account/{$this->agent->username}/inbox";
         $verify = AP::verify($publicKey, $signatureData, $inputHeaders, $inboxPath, $this->body);
-        if($verify === 1) {
+        if($verify == 1) {
             $this->actor = $actor;
             $this->handleVerb();
         } else {
