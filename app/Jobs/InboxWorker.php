@@ -112,6 +112,7 @@ class InboxWorker implements ShouldQueue
 
     protected function sendFollowAccept($follower)
     {
+        $body = json_decode($this->body, true, 8);
         $target = $this->agent;
         $actor = $follower;
         $accept = [
@@ -120,7 +121,7 @@ class InboxWorker implements ShouldQueue
             'type'     => 'Accept',
             'actor'    => $target->permalink(),
             'object'   => [
-                'id' => $actor->profile_url . '#follows/' . $follower->id,
+                'id' => $body['id'],
                 'type'  => 'Follow',
                 'actor' => $actor->profile_url,
                 'object' => $target->permalink()
