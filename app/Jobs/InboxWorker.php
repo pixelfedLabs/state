@@ -117,15 +117,10 @@ class InboxWorker implements ShouldQueue
         $actor = $follower;
         $accept = [
             '@context' => 'https://www.w3.org/ns/activitystreams',
-            'id'       => $body['id'],
+            'id'       => $target->permalink().'#accepts/follows/' . $follower->id,
             'type'     => 'Accept',
             'actor'    => $target->permalink(),
-            'object'   => [
-                'id' => $actor->profile_url . '#follows/' . $follower->id,
-                'type'  => 'Follow',
-                'actor' => $actor->profile_url,
-                'object' => $target->permalink()
-            ]
+            'object'   => $body['id']
         ];
         $to = $follower->shared_inbox_url ?? $actor->inbox_url;
         AP::sendSignedObject($target, $to, $accept);
