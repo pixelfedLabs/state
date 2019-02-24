@@ -122,7 +122,7 @@ class InboxWorker implements ShouldQueue
             'actor'    => $target->permalink(),
             'object'   => $body
         ];
-        $to = $follower->shared_inbox_url ?? $actor->inbox_url;
+        $to = $actor->inbox_url;
         AP::sendSignedObject($target, $to, $accept);
     }
 }
