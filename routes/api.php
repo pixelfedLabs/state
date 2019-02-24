@@ -15,8 +15,9 @@ use Illuminate\Http\Request;
 
 
 Route::group(['prefix' => 'api/v1'], function() {
-	Route::get('services', 'ApiController@services');
 	Route::get('systems', 'ApiController@systems');
+	Route::get('services', 'ApiController@services');
+	Route::get('service/{id}', 'ApiController@service');
 	Route::get('incidents', 'ApiController@incidents');
 });
 

@@ -45,6 +45,14 @@ class ApiController extends Controller
 		return $this->fractal->createData($res)->toArray();
 	}
 
+
+	public function service(Request $request, $id)
+	{
+		$service = Service::findOrFail($id);
+		$res = new Fractal\Resource\Item($service, new ServiceTransformer());
+		return $this->fractal->createData($res)->toArray();
+	}
+
 	public function incidents(Request $request)
 	{
 		$incidents = collect([]);
