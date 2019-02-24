@@ -15,7 +15,7 @@ class ActivityPubActorTransformer extends Fractal\TransformerAbstract {
 			'type' => 'Person',
 			'inbox' => $actor->permalink('/inbox'),
 			'outbox' => $actor->permalink('/outbox'),
-			'name' => $actor->system->name,
+			'name' => $actor->service->name,
 			'preferredUsername' => $actor->username,
 			'url' => $actor->permalink(),
 			'publicKey' => [
