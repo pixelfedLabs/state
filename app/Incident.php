@@ -17,9 +17,9 @@ class Incident extends Model
 		$year = $this->created_at->format('Y');
 		$month = $this->created_at->format('m');
 		$day = $this->created_at->format('d');
-		$system = $this->system->id;
+		$service = $this->service->id;
 		$slug = $this->service->slug;
-		return url("/history/{$system}/{$slug}/{$year}/{$month}/{$day}");
+		return url("/history/{$service}/{$slug}/{$year}/{$month}/{$day}");
 	}
 
 	public function permalink($suffix = null)
@@ -35,11 +35,6 @@ class Incident extends Model
 	public function service()
 	{
 		return $this->belongsTo(Service::class);
-	}
-
-	public function system()
-	{
-		return $this->belongsTo(System::class);
 	}
 
 	public function updates()

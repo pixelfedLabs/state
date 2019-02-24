@@ -10,9 +10,9 @@ class ServiceTransformer extends Fractal\TransformerAbstract {
 	public function transform(Service $service)
 	{
 		return [
-			'system_id' => $service->system_id,
 			'name' => $service->name,
 			'url' => $service->url(),
+			'domain' => parse_url($service->url(), PHP_URL_HOST),
 			'description' => $service->description,
 			'tooltip' => $service->tooltip,
 			'active' => (bool) $service->active,

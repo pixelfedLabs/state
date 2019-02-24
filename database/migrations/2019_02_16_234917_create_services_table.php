@@ -15,10 +15,10 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('system_id')->index();
             $table->string('name')->nullable();
             $table->string('slug')->unique()->index();
             $table->text('description')->nullable();
+            $table->string('website')->nullable();
             $table->string('tooltip')->nullable();
             $table->boolean('active')->default(false)->index();
             $table->timestamps();

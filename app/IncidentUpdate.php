@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class IncidentUpdate extends Model
 {
-	public function system()
-	{
-		return $this->belongsTo(System::class);
-	}
-
 	public function service()
 	{
 		return $this->belongsTo(Service::class);

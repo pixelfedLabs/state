@@ -21,16 +21,6 @@ class Service extends Model
 		return url("/dashboard/services/show/{$this->id}");
 	}
 
-	public function system()
-	{
-		return $this->belongsTo(System::class);
-	}
-
-	public function service()
-	{
-		return $this->belongsTo(Service::class);
-	}
-
 	public function incidents()
 	{
 		return $this->hasMany(Incident::class);

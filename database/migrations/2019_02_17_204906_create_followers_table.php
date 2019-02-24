@@ -15,7 +15,7 @@ class CreateFollowersTable extends Migration
     {
         Schema::create('followers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('system_id')->index();
+            $table->bigInteger('service_id')->unsigned()->index();
             $table->unsignedInteger('actor_id')->index();
             $table->string('profile_url')->index();
             $table->string('inbox_url')->index();

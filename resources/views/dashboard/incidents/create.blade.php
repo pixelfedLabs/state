@@ -28,9 +28,9 @@
 		<div class="form-group">
 			<label class="font-nunito">System Service</label>
 			<select class="custom-select" name="service">
-				<option selected>Select a System Service</option>
+				<option selected>Select a Service</option>
 				@foreach($services as $service)
-				<option value="{{$service->id}}">System: {{$service->system->name}} | Service: {{$service->name}}</option>
+				<option value="{{$service->id}}">Service: {{$service->name}}</option>
 				@endforeach
 			</select>
 		</div>

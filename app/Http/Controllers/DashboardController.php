@@ -34,59 +34,6 @@ class DashboardController extends Controller
 		return view('dashboard.home', compact('services', 'incidents'));
 	}
 
-	public function systems()
-	{
-		$systems = System::orderByDesc('id')->paginate(10);
-		return view('dashboard.systems.home', compact('systems'));
-	}
-
-	public function systemShow(Request $request, $id)
-	{
-		$system = System::findOrFail($id);
-		return view('dashboard.systems.show', compact('system'));
-	}
-
-	public function systemCreate()
-	{
-		return view('dashboard.systems.create');
-	}
-
-	public function systemStore(Request $request)
-	{
-		$this->validate($request, [
-			'name'	=> 'required|string|max:40',
-			'description' => 'nullable|string|max:150',
-			'website'	=> 'nullable|url',
-			'active' => 'nullable'
-		]);
-
-		$name = $request->input('name');
-		$description = $request->input('description');
-		$website = $request->input('website');
-		$active = $request->input('active') == 'on';
-
-		$system = new System;
-		$system->name = $name;
-		$system->description = $description;
-		$system->website = $website;
-		$system->active = $active;
-		$system->save();
-
-		return redirect($system->dashboardUrl());
-	}
-
-	public function systemDelete(Request $request, $id)
-	{
-		$system = System::with('updates','incidents','services')->findOrFail($id);
-
-		$system->updates()->delete();
-		$system->incidents()->delete();
-		$system->services()->delete();
-		$system->delete();
-
-		return redirect('/dashboard');
-	}
-
 	public function services()
 	{
 		$services = Service::orderByDesc('id')->paginate(10);
@@ -107,19 +54,16 @@ class DashboardController extends Controller
 	public function serviceStore(Request $request)
 	{
 		$this->validate($request, [
-			'system' => 'required|integer|min:1|exists:systems,id',
 			'name'	=> 'required|string|max:40',
 			'description' => 'nullable|string|max:150',
 			'active' => 'required'
 		]);
 
-		$system = (int) $request->input('system');
 		$name = $request->input('name');
 		$description = $request->input('description');
 		$active = $request->input('active') == 'on';
 
 		$service = new Service;
-		$service->system_id = $system;
 		$service->name = $name;
 		$service->slug = str_slug($name);
 		$service->description = $description;
@@ -156,7 +100,7 @@ class DashboardController extends Controller
 
 	public function incidentCreate(Request $request)
 	{
-		$services = Service::with('system')->get();
+		$services = Service::get();
 		return view('dashboard.incidents.create', compact('services'));
 	}
 
@@ -166,11 +110,10 @@ class DashboardController extends Controller
 			'service' => 'required|integer|exists:services,id',
 			'title' => 'nullable|max:150'
 		]);
-		$service = Service::with('system')->findOrFail($request->input('service'));
+		$service = Service::findOrFail($request->input('service'));
 		$title = $request->input('title');
 
 		$incident = new Incident;
-		$incident->system_id = $service->system->id;
 		$incident->service_id = $service->id;
 		$incident->slug = (string) Str::uuid();
 		$incident->state = 'investigating';
@@ -178,7 +121,6 @@ class DashboardController extends Controller
 		$incident->save();
 
 		$update = new IncidentUpdate;
-		$update->system_id = $service->system->id;
 		$update->service_id = $service->id;
 		$update->incident_id = $incident->id;
 		$update->slug = (string) Str::uuid();
@@ -214,7 +156,6 @@ class DashboardController extends Controller
 		$service = $incident->service;
 
 		$update = new IncidentUpdate;
-		$update->system_id = $service->system->id;
 		$update->service_id = $service->id;
 		$update->incident_id = $incident->id;
 		$update->slug = (string) Str::uuid();
@@ -290,11 +231,10 @@ class DashboardController extends Controller
 			'active' => 'nullable|string'
 		]);
 
-		$service = Service::with('system')->findOrFail($request->input('service'));
+		$service = Service::findOrFail($request->input('service'));
 
 		$agent = new Agent;
 		$agent->slug = (string) Str::uuid();
-		$agent->system_id = $service->system->id;
 		$agent->service_id = $service->id;
 		$agent->name = $request->input('name');
 		$agent->description = $request->input('description');
@@ -317,7 +257,6 @@ class DashboardController extends Controller
 	public function agentUpdate(Request $request, $id)
 	{
 		$this->validate($request, [
-			'service' => 'required|integer|exists:services,id',
 			'name' => 'nullable|string|max:40',
 			'description' => 'nullable|string|max:150',
 			'check_url' => 'required|url|unique:agents',
@@ -328,7 +267,6 @@ class DashboardController extends Controller
 
 		$agent = Agent::findOrFail($id);
 		$agent->slug = (string) Str::uuid();
-		$agent->system_id = $service->system->id;
 		$agent->service_id = $service->id;
 		$agent->name = $request->input('name');
 		$agent->description = $request->input('description');

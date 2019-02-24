@@ -28,11 +28,11 @@
 		<input type="hidden" name="_method" value="POST">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="form-group">
-			<label class="font-nunito">System Service</label>
+			<label class="font-nunito">Service</label>
 			<select class="custom-select" name="service" disabled>
 				<option selected>Select a System Service</option>
 				@foreach($services as $service)
-				<option value="{{$service->id}}" {{$service->id == $update->service_id?'selected':''}}>System: {{$service->system->name}} | Service: {{$service->name}}</option>
+				<option value="{{$service->id}}" {{$service->id == $update->service_id?'selected':''}}>Service: {{$service->name}}</option>
 				@endforeach
 			</select>
 		</div>

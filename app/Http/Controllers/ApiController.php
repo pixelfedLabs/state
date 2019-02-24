@@ -19,7 +19,7 @@ use League\Fractal\Serializer\ArraySerializer;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use App\Transformers\{
 	IncidentTransformer,
-	SystemTransformer,
+	ServiceTransformer,
 };
 
 class ApiController extends Controller
@@ -34,8 +34,14 @@ class ApiController extends Controller
 
 	public function systems(Request $request)
 	{
-		$systems = System::orderByDesc('created_at')->paginate(10);
-		$res = new Fractal\Resource\Collection($systems, new SystemTransformer());
+		return [];
+	}
+
+
+	public function services(Request $request)
+	{
+		$service = Service::orderByDesc('created_at')->paginate(10);
+		$res = new Fractal\Resource\Collection($service, new ServiceTransformer());
 		return $this->fractal->createData($res)->toArray();
 	}
 

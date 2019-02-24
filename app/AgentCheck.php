@@ -8,11 +8,6 @@ class AgentCheck extends Model
 {
 	protected $fillable = ['*'];
 
-	public function system()
-	{
-		return $this->belongsTo(System::class);
-	}
-
 	public function service()
 	{
 		return $this->belongsTo(Service::class);

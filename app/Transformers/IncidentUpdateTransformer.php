@@ -10,7 +10,6 @@ class IncidentUpdateTransformer extends Fractal\TransformerAbstract {
 	public function transform(IncidentUpdate $incident)
 	{
 		return [
-			'system_id' => $incident->system_id,
 			'service_id' => $incident->service_id,
 			'incident_id' => $incident->incident_id,
 			'state' => $incident->getState(),

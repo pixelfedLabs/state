@@ -21,11 +21,6 @@ class Agent extends Model
 		return $this->belongsTo(Service::class);
 	}
 
-	public function system()
-	{
-		return $this->belongsTo(System::class);
-	}
-
 	public function humanFrequency()
 	{
 		return $this->frequency . ' minutes';

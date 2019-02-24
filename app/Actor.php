@@ -11,9 +11,9 @@ class Actor extends Model
 		return url("/account/{$this->username}");
 	}
 
-	public function system()
+	public function service()
 	{
-		return $this->hasOne(System::class, 'id');
+		return $this->hasOne(Service::class, 'id');
 	}
 
 	public function permalink($suffix = null)

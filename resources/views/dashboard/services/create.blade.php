@@ -26,15 +26,6 @@
 		<form method="post">
 			@csrf
 			<div class="form-group">
-				<label class="font-nunito">System</label>
-				<select class="custom-select" name="system">
-					<option selected>Select a System</option>
-					@foreach(App\System::get() as $system)
-					<option value="{{$system->id}}">{{$system->name}}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="form-group">
 				<label class="font-nunito">Name</label>
 				<input type="text" class="form-control" name="name" placeholder="Service name (ex: Website or API)" autocomplete="off">
 			</div>

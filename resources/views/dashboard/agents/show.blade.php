@@ -49,11 +49,11 @@
 				<form method="post">
 					@csrf
 					<div class="form-group">
-						<label class="font-nunito">System Service</label>
+						<label class="font-nunito">Service</label>
 						<select class="custom-select" name="service">
 							<option disabled>Select a System Service</option>
 							@foreach(App\Service::get() as $service)
-							<option value="{{$service->id}}" {{$service->id == $agent->system_id?'checked':''}}>System: {{$service->system->name}} | Service: {{$service->name}}</option>
+							<option value="{{$service->id}}" {{$service->id == $agent->system_id?'checked':''}}>Service: {{$service->name}}</option>
 							@endforeach
 						</select>
 					</div>

@@ -15,8 +15,8 @@ class CreateActorsTable extends Migration
     {
         Schema::create('actors', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('service_id')->unsigned()->index();
             $table->uuid('username')->unique()->index();
-            $table->unsignedInteger('system_id')->nullable();
             $table->text('private_key')->nullable();
             $table->text('public_key')->nullable();
             $table->timestamps();

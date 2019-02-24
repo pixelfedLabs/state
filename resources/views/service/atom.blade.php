@@ -3,9 +3,9 @@
     '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL
 ?>
 <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
-  <id>tag:{{parse_url(config('app.url'), PHP_URL_HOST)}},2005:/feeds/system/history</id>
+  <id>tag:{{parse_url(config('app.url'), PHP_URL_HOST)}},2005:/feeds/service/history</id>
   <link rel="alternate" type="text/html" href="{{config('app.url')}}"/>
-  <link rel="self" type="application/atom+xml" href="{{route('feed.system.atom')}}"/>
+  <link rel="self" type="application/atom+xml" href="{{route('feed.service.atom')}}"/>
   <title>{{config('app.name')}} - Incident History</title>
   <updated>{{now()->format(DATE_ATOM)}}</updated>
   <author>

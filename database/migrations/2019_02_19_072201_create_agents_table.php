@@ -15,7 +15,6 @@ class CreateAgentsTable extends Migration
     {
         Schema::create('agents', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('system_id')->index();
             $table->bigInteger('service_id')->unsigned()->nullable()->index();
             $table->string('name')->nullable();
             $table->string('description')->nullable();

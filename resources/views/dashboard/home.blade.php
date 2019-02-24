@@ -4,12 +4,6 @@
 <div class="row mb-5">
 	<div class="col-12 col-md-4">
 		<div class="card card-body text-center">
-			<p class="display-4 mb-0 font-nunito">{{App\System::count()}}</p>
-			<p class="lead text-muted mb-0 font-nunito">Systems</p>
-		</div>
-	</div>
-	<div class="col-12 col-md-4">
-		<div class="card card-body text-center">
 			<p class="display-4 mb-0 font-nunito">{{App\Service::count()}}</p>
 			<p class="lead text-muted mb-0 font-nunito">Services</p>
 		</div>
@@ -52,9 +46,6 @@
 						<div>
 							<p class=" font-nunito font-weight-bold mb-0">
 								ID: {{$incident->id}}
-							</p>
-							<p class=" font-nunito font-weight-bold mb-0">
-								System: <a class="font-nunito font-weight-bold" href="{{$incident->system->dashboardUrl()}}">{{str_limit($incident->system->name,18)}}</a>
 							</p>
 							<p class=" font-nunito font-weight-bold mb-0">
 								Service: <a class="font-nunito font-weight-bold" href="{{$incident->service->dashboardUrl()}}">{{str_limit($incident->service->name,18)}}</a>

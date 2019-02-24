@@ -23,9 +23,6 @@
 								ID: {{$incident->id}}
 							</p>
 							<p class=" font-nunito font-weight-bold mb-0">
-								System: <a class="font-nunito font-weight-bold" href="{{$incident->system->dashboardUrl()}}">{{str_limit($incident->system->name,18)}}</a>
-							</p>
-							<p class=" font-nunito font-weight-bold mb-0">
 								Service: <a class="font-nunito font-weight-bold" href="{{$incident->service->dashboardUrl()}}">{{str_limit($incident->service->name,18)}}</a>
 							</p>
 							<p class=" font-nunito font-weight-bold mb-0">
@@ -49,10 +46,6 @@
 	</div>
 	<div class="col-12 col-md-6">
 		<ul class="list-group  mb-3">
-			<li class="list-group-item text-center">
-				<p class="lead font-nunito font-weight-bold mb-0">{{$service->system->name}}</p>
-				<p class="small text-muted mb-0">SYSTEM</p>
-			</li>
 			<li class="list-group-item text-center">
 				<p class="lead font-nunito mb-0">{{$service->description}}</p>
 				<p class="small text-muted mb-0">DESCRIPTION</p>

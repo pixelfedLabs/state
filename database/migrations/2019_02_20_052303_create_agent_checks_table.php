@@ -16,7 +16,6 @@ class CreateAgentChecksTable extends Migration
         Schema::create('agent_checks', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('system_id')->nullable()->index();
             $table->bigInteger('service_id')->unsigned()->nullable()->index();
             $table->unsignedInteger('agent_id')->index();
 

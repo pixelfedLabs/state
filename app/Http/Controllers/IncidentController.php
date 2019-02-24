@@ -15,7 +15,7 @@ class IncidentController extends Controller
 {
     public function show(Request $request, $id)
     {
-    	$incident = Incident::with('system')->whereSlug($id)->firstOrFail();
+    	$incident = Incident::with('service')->whereSlug($id)->firstOrFail();
     	if($request->wantsJson()) {
 			$fractal = new Fractal\Manager();
 			$fractal->setSerializer(new ArraySerializer());

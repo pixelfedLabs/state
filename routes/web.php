@@ -21,13 +21,6 @@ Route::group(['prefix' => 'dashboard'], function() {
 	Route::redirect('/', '/dashboard/home');
 	Route::get('home', 'DashboardController@home')->name('dashboard.home');
 
-	// Systems
-	Route::get('systems', 'DashboardController@systems')->name('dashboard.systems');
-	Route::get('systems/create', 'DashboardController@systemCreate')->name('dashboard.systems.create');
-	Route::post('systems/create', 'DashboardController@systemStore');
-	Route::get('systems/show/{id}', 'DashboardController@systemShow');
-	Route::delete('systems/show/{id}', 'DashboardController@systemDelete');
-
 	// Services
 	Route::get('services', 'DashboardController@services')->name('dashboard.services');
 	Route::get('services/create', 'DashboardController@serviceCreate')->name('dashboard.services.create');
@@ -67,7 +60,7 @@ Route::get('site/about', 'SiteController@about')->name('site.about');
 Route::get('site/subscribe', 'SiteController@subscribe')->name('site.subscribe');
 
 Route::group(['prefix' => 'feeds'], function() {
-	Route::get('system/history.atom', 'SystemController@atomFeed')->name('feed.system.atom');
+	Route::get('service/history.atom', 'ServiceController@atomFeed')->name('feed.service.atom');
 });
 
 Route::get('api/v1/services/uptime/{agentId}', 'ApiController@serviceUptime');

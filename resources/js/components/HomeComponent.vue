@@ -1,8 +1,8 @@
 <template>
 	
-<div v-if="systems.length" class="container mt-3">
+<div v-if="services.length" class="container mt-3">
 
-	<p class="h4 text-center pb-5 font-nunito">Status Monitoring for <a class="font-weight-bold text-dark" :href="systems[0].website">{{systems[0].domain}}</a></p>
+	<p class="h4 text-center pb-5 font-nunito">Status Monitoring for <a class="font-weight-bold text-dark" :href="services[0].website">{{services[0].domain}}</a></p>
 
 	<div :class="systemHealth.class">
 		<span class="d-inline text-white h3 mb-0 font-nunito font-weight-bold" v-html="systemHealth.message">
@@ -129,7 +129,7 @@
 		},
 
 		beforeMount() {
-			this.fetchSystems();
+			this.fetchServices();
 		},
 
 		mounted() {
@@ -227,11 +227,10 @@
 					});
 			},
 
-			fetchSystems() {
-				axios.get('/api/v1/systems')
+			fetchServices() {
+				axios.get('/api/v1/services')
 					.then(res => {
-						this.systems = res.data;
-						this.services = this.systems[0].services;
+						this.services = res.data;
 						this.fetchIncidents();
 					})
 			},
