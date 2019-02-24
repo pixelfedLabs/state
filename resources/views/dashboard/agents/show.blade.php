@@ -17,7 +17,7 @@
 <div class="row">
 	<div class="col-12">
 		<div class="pb-4">
-			<uptime-graph id="{{$agent->id}}"></uptime-graph>
+			<uptime-graph id="{{$agent->slug}}"></uptime-graph>
 		</div>
 	</div>
 	<div class="col-12 col-md-6 mb-3">
