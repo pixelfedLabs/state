@@ -96,7 +96,7 @@ class InboxWorker implements ShouldQueue
         $actor = $this->actor;
 
         $follower = new Follower;
-        $follower->system_id = $agent->system_id;
+        $follower->service_id = $agent->service_id;
         $follower->actor_id = $agent->id;
         $follower->profile_url = $actor['url'];
         $follower->inbox_url = $actor['inbox'];
