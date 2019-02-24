@@ -9,7 +9,7 @@ class CreateNoteTransformer extends Fractal\TransformerAbstract {
 
 	public function transform(Incident $incident)
 	{
-		$actor = $incident->system->actor;
+		$actor = $incident->service->actor;
 		return [
 			'@context' => [
 				'https://www.w3.org/ns/activitystreams',
