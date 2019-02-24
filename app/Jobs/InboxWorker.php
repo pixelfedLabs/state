@@ -120,7 +120,7 @@ class InboxWorker implements ShouldQueue
             'id'       => $target->permalink().'#accepts/follows/' . $follower->id,
             'type'     => 'Accept',
             'actor'    => $target->permalink(),
-            'object'   => $body
+            'object'   => $body['id']
         ];
         $to = $actor->inbox_url;
         AP::sendSignedObject($target, $to, $accept);
