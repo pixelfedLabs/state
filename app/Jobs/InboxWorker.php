@@ -51,7 +51,6 @@ class InboxWorker implements ShouldQueue
         if($body['type'] == 'Follow') {
             $this->verifySignature();
         } else {
-            Log::info('Invalid AP Verb.');
             exit;
         }
     }
@@ -62,7 +61,6 @@ class InboxWorker implements ShouldQueue
         $url = AP::validateUrl($body['actor']);
         $actor = AP::fetchFromUrl($url);
         if(!$actor) {
-            Log::info('Invalid Actor');
             exit;
         }
         $publicKey = openssl_pkey_get_public($actor['publicKey']['publicKeyPem']);
@@ -74,7 +72,6 @@ class InboxWorker implements ShouldQueue
             $this->actor = $actor;
             $this->handleVerb();
         } else {
-            Log::info('Invalid Signature');
             exit;
         }
     }
@@ -130,7 +127,6 @@ class InboxWorker implements ShouldQueue
             ]
         ];
         $to = $follower->shared_inbox_url ?? $actor->inbox_url;
-        $res = AP::sendSignedObject($target, $to, $accept);
-        Log::info($res);
+        AP::sendSignedObject($target, $to, $accept);
     }
 }
