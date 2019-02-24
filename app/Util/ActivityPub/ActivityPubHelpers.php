@@ -96,7 +96,8 @@ class ActivityPubHelpers {
 	}
 
 	public static function verify($publicKey, $signatureData, $inputHeaders, $path, $body) {
-		$digest = 'SHA-256='.base64_encode(hash('sha256', $body, true));
+		$json = is_array($body) ? json_encode($body) : $body;
+		$digest = 'SHA-256='.base64_encode(hash('sha256', $json, true));
 		$headersToSign = [];
 		foreach(explode(' ',$signatureData['headers']) as $h) {
 			if($h == '(request-target)') {
