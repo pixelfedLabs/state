@@ -14,6 +14,12 @@
 			<p class="lead text-muted mb-0 font-nunito">Incidents</p>
 		</div>
 	</div>
+	<div class="col-12 col-md-4">
+		<div class="card card-body text-center">
+			<p class="display-4 mb-0 font-nunito">{{App\Agent::count()}}</p>
+			<p class="lead text-muted mb-0 font-nunito">Agents</p>
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-12 col-md-6">
