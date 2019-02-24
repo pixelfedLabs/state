@@ -71,3 +71,4 @@ Route::group(['prefix' => 'api/v2'], function() {
 
 Route::get('incident/{id}', 'IncidentController@show');
 Route::get('uptime/{slug}/{year}/{month}/{day}', 'AgentCheckController@show');
+Route::get('service/{id}/{slug}', 'ServiceController@show');
