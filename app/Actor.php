@@ -33,7 +33,7 @@ class Actor extends Model
 
 	public function incidents()
 	{
-		return $this->hasMany(Incident::class, 'system_id', 'system_id');
+		return $this->hasMany(Incident::class, 'service_id', 'service_id');
 	}
 
 	public function keyId()
