@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Cache;
 use App\{
 	Actor,
 	Agent,
@@ -81,7 +82,7 @@ class DashboardController extends Controller
         openssl_pkey_export($pki, $pki_private);
         $pki_public = openssl_pkey_get_details($pki);
         $pki_public = $pki_public['key'];
-        
+
 		$actor = new Actor;
 		$actor->service_id = $service->id;
 		$actor->username = (string) Str::uuid();
@@ -89,13 +90,15 @@ class DashboardController extends Controller
 		$actor->public_key = $pki_public;
 		$actor->save();
 
+		Cache::forget('api-v1:services');
+
 		return redirect($service->dashboardUrl());
 	}
 
 	public function serviceDelete(Request $request, $id)
 	{
 		$service = Service::with('updates','incidents')->findOrFail($id);
-
+		Cache::forget('api-v1:services');
 		$service->updates()->delete();
 		$service->incidents()->delete();
 		$service->delete();

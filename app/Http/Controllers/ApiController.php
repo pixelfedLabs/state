@@ -40,11 +40,12 @@ class ApiController extends Controller
 
 	public function services(Request $request)
 	{
-		$service = Service::orderByDesc('created_at')->paginate(10);
-		$res = new Fractal\Resource\Collection($service, new ServiceTransformer());
-		return $this->fractal->createData($res)->toArray();
+		return Cache::remember('api-v1:services', 1440, function() {
+			$service = Service::orderByDesc('created_at')->get();
+			$res = new Fractal\Resource\Collection($service, new ServiceTransformer());
+			return $this->fractal->createData($res)->toArray();
+		});
 	}
-
 
 	public function service(Request $request, $id)
 	{
