@@ -15,7 +15,7 @@
 			<div class="list-group-item py-3" v-for="(service, index) in services">
 				<div class="d-flex justify-content-between">
 					<div>
-						<span class="lead font-weight-bold mr-2">{{service.name}}</span>
+						<a class="lead font-weight-bold mr-2 text-dark" :href="service.url">{{service.name}}</a>
 						<span data-toggle="tooltip" :title="service.tooltip"><i class="far fa-question-circle"></i></span>
 					</div>
 					<div v-html="stateToText(service.state)">
