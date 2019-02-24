@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\{
+	Actor,
 	Agent,
 	AgentCheck,
 	Incident,
@@ -70,6 +71,23 @@ class DashboardController extends Controller
 		$service->tooltip = $description;
 		$service->active = $active;
 		$service->save();
+
+        $pkiConfig = [
+            'digest_alg'       => 'sha512',
+            'private_key_bits' => 2048,
+            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+        ];
+        $pki = openssl_pkey_new($pkiConfig);
+        openssl_pkey_export($pki, $pki_private);
+        $pki_public = openssl_pkey_get_details($pki);
+        $pki_public = $pki_public['key'];
+        
+		$actor = new Actor;
+		$actor->service_id = $service->id;
+		$actor->username = (string) Str::uuid();
+		$actor->private_key = $pki_private;
+		$actor->public_key = $pki_public;
+		$actor->save();
 
 		return redirect($service->dashboardUrl());
 	}
