@@ -35,7 +35,11 @@ class ActivityPubController extends Controller
 	public function inbox(Request $request, $username)
 	{
 		$agent = Actor::whereUsername($username)->firstOrFail();
-		InboxWorker::dispatchNow($agent, $request->headers->all(), $request->getContent());
+		$signature = $request->header('signature');
+		if(!$signature) {
+			abort(400, 'Missing signature');
+		}
+		InboxWorker::dispatchNow($agent, $request->headers->all(), $request->getContent(), $signature);
 		return response()->json([], 200);
 	}
 

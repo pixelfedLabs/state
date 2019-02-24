@@ -20,17 +20,19 @@ class InboxWorker implements ShouldQueue
     protected $body;
     protected $agent;
     protected $actor;
+    protected $signature;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($agent, $headers, $body)
+    public function __construct($agent, $headers, $body, $signature)
     {
         $this->agent = $agent;
         $this->headers = $headers;
         $this->body = json_decode($body, true, 8);
+        $this->signature = $signature;
     }
 
     /**
@@ -62,7 +64,7 @@ class InboxWorker implements ShouldQueue
             exit;
         }
         $publicKey = openssl_pkey_get_public($actor['publicKey']['publicKeyPem']);
-        $signatureData = AP::parseSignatureHeader($this->headers['signature']);
+        $signatureData = AP::parseSignatureHeader($this->signature);
         $inputHeaders = $this->headers;
         $inboxPath = "/account/{$this->agent->username}/inbox";
         $verify = AP::verify($publicKey, $signatureData, $inputHeaders, $inboxPath, $this->body);
