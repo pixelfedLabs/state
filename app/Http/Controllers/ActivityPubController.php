@@ -35,7 +35,7 @@ class ActivityPubController extends Controller
 	public function inbox(Request $request, $username)
 	{
 		$agent = Actor::whereUsername($username)->firstOrFail();
-		InboxWorker::dispatchNow($agent, $request->headers(), $request->getContent());
+		InboxWorker::dispatchNow($agent, $request->headers()->all(), $request->getContent());
 		return response()->json([], 200);
 	}
 
