@@ -27,7 +27,7 @@ class ActivityPubController extends Controller
 		$actor = Actor::whereUsername($id)->firstOrFail();
 		$res = new Fractal\Resource\Item($actor, new ActivityPubActorTransformer);
 		return response()->json($this->fractal->createData($res)->toArray(), 200, [
-			'Content-Type' => 'application/activity+json; charset=utf-8'
+			'Content-Type' => 'application/activity+json'
 		], JSON_PRETTY_PRINT);
 	}
 
