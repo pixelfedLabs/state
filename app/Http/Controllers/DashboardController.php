@@ -280,7 +280,7 @@ class DashboardController extends Controller
 		$this->validate($request, [
 			'name' => 'nullable|string|max:40',
 			'description' => 'nullable|string|max:150',
-			'check_url' => 'required|url|unique:agents',
+			'check_url' => 'required|url',
 			'check_text' => 'nullable|string|max:150',
 			'frequency' => 'required|integer|min:5|max:60',
 			'active' => 'nullable|string'
@@ -288,7 +288,7 @@ class DashboardController extends Controller
 
 		$agent = Agent::findOrFail($id);
 		$agent->slug = (string) Str::uuid();
-		$agent->service_id = $service->id;
+		$agent->service_id = $agent->service->id;
 		$agent->name = $request->input('name');
 		$agent->description = $request->input('description');
 		$agent->check_url = $request->input('check_url');
