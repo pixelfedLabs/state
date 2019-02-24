@@ -62,7 +62,7 @@ class InboxWorker implements ShouldQueue
             exit;
         }
         $publicKey = openssl_pkey_get_public($actor['publicKey']['publicKeyPem']);
-        $signatureData = $this->headers['signature'];
+        $signatureData = AP::parseSignatureHeader($this->headers['signature']);
         $inputHeaders = $this->headers;
         $inboxPath = "/account/{$this->agent->username}/inbox";
         $verify = AP::verify($publicKey, $signatureData, $inputHeaders, $inboxPath, $this->body);
