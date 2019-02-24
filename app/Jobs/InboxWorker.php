@@ -47,7 +47,8 @@ class InboxWorker implements ShouldQueue
 
     protected function validateVerb()
     {
-        if($this->body['type'] == 'Follow') {
+        $body = json_decode($this->body, true, 8);
+        if($body['type'] == 'Follow') {
             $this->verifySignature();
         } else {
             Log::info('Invalid AP Verb.');
