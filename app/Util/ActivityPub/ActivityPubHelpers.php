@@ -149,7 +149,7 @@ class ActivityPubHelpers {
 	public static function sendSignedObject($senderProfile, $url, $body)
 	{
 		$payload = is_array($body) ? json_encode($body) : $body;
-		$headers = self::sign($senderProfile, $url, $body);
+		$headers = self::sign($senderProfile, $url, $payload);
 
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
