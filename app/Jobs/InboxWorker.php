@@ -49,7 +49,8 @@ class InboxWorker implements ShouldQueue
     protected function validateVerb()
     {
         $body = json_decode($this->body, true, 8);
-        if($body['type'] == 'Follow') {
+        $types = ['Follow', 'Undo'];
+        if(in_array($body['type'], $types)) {
             $this->verifySignature();
         } else {
             exit;
@@ -59,6 +60,11 @@ class InboxWorker implements ShouldQueue
     protected function verifySignature()
     {
         $body = json_decode($this->body, true, 8);
+        if($body['type'] == 'Undo') {
+            if(!isset($body['object']['type']) || $body['object']['type'] != 'Follow') {
+                exit;
+            }
+        }
         $url = AP::validateUrl($body['actor']);
         $actor = AP::fetchFromUrl($url);
         if(!$actor) {
@@ -79,13 +85,17 @@ class InboxWorker implements ShouldQueue
 
     protected function handleVerb()
     {
+        $body = json_decode($this->body, true, 8);
+        $type = $body['type'] == 'Follow' ? 'Follow' : 'Unfollow';
         $agent = $this->agent;
         $actor = $this->actor;
         $exists = Follower::whereActorId($agent->id)
             ->whereProfileUrl($actor['url'])
             ->exists();
-        if($exists == false) {
+        if($exists == false && $type == 'Follow') {
             $this->createNewFollower();
+        } else if ($exists == true && $type == 'Unfollow') {
+            $this->unfollow();
         } else {
             exit;
         }
@@ -109,6 +119,15 @@ class InboxWorker implements ShouldQueue
         $follower->save();
 
         $this->sendFollowAccept($follower);
+    }
+
+    protected function unfollow()
+    {
+        $agent = $this->agent;
+        $actor = $this->actor;
+        $exists = Follower::whereActorId($agent->id)
+            ->whereProfileUrl($actor['url'])
+            ->delete();
     }
 
     protected function sendFollowAccept($follower)
