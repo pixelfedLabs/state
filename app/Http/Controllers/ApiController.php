@@ -40,7 +40,7 @@ class ApiController extends Controller
 
 	public function services(Request $request)
 	{
-		return Cache::remember('api-v1:services', 1440, function() {
+		return Cache::remember('api-v1:services', now()->addMinutes(1440), function() {
 			$service = Service::orderByDesc('created_at')->get();
 			$res = new Fractal\Resource\Collection($service, new ServiceTransformer());
 			return $this->fractal->createData($res)->toArray();
@@ -80,7 +80,7 @@ class ApiController extends Controller
 		]);
 		$agent = Agent::whereActive(true)->whereSlug($agentId)->firstOrFail();
 		$days = $request->input('days') ?? 90;
-		$res = Cache::remember('api:agent:uptime:id-'.$agent->id.':days-'.$days, 15, function() use($agent, $days) {
+		$res = Cache::remember('api:agent:uptime:id-'.$agent->id.':days-'.$days, now()->addMinutes(15), function() use($agent, $days) {
 			$incidents = collect([]);
 			$periods = collect(\Carbon\CarbonPeriod::create(now()->subDays($days), now()));
 			foreach($periods as $i => $period) {
