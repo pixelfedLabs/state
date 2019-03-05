@@ -99,6 +99,9 @@ class DashboardController extends Controller
 	{
 		$service = Service::with('updates','incidents')->findOrFail($id);
 		Cache::forget('api-v1:services');
+		$service->actor->followers()->delete();
+		$service->actor()->delete();
+		$service->agents()->delete();
 		$service->updates()->delete();
 		$service->incidents()->delete();
 		$service->delete();
