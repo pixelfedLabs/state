@@ -58,11 +58,8 @@
 					@csrf
 					<div class="form-group">
 						<label class="font-nunito">Service</label>
-						<select class="custom-select" name="service">
-							<option disabled>Select a System Service</option>
-							@foreach(App\Service::get() as $service)
-							<option value="{{$service->id}}" {{$service->id == $agent->system_id?'checked':''}}>Service: {{$service->name}}</option>
-							@endforeach
+						<select class="custom-select" name="service" disabled>
+							<option value="{{$agent->service_id}}" selected>{{$agent->service->name}}</option>
 						</select>
 					</div>
 					<div class="form-group pb-2">
