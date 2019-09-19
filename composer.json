@@ -8,11 +8,12 @@
         "pixelfed",
         "statuspage"
     ],
-    "license": "MIT",
+    "license": "AGPL-3.0-only",
     "require": {
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.0",
+        "laravel/helpers": "^1.1",
         "laravel/tinker": "^1.0",
         "pixelfed/fractal": "^0.18.0",
         "pixelfed/zttp": "^0.4",
