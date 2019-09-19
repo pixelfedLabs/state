@@ -9,8 +9,10 @@ class ServiceController extends Controller
 {
 	public function atomFeed()
 	{
-		$entries = Service::first()->incidents()->orderByDesc('id')->take(10)->get();
-		return response()->view('service.atom', compact('entries'))->header('Content-Type', 'application/atom+xml');
+		abort(404);
+		// todo: fix atom feed
+		// $entries = Service::first()->incidents()->orderByDesc('id')->take(10)->get();
+		// return response()->view('service.atom', compact('entries'))->header('Content-Type', 'application/atom+xml');
 	}
 
 	public function show(Request $request, $id, $slug)
