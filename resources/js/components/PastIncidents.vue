@@ -45,7 +45,7 @@
 					<a v-if="page && page < 6" href="#" class="lead font-weight-lighter" @click.prevent="loadPrevious"><i class="fas fa-chevron-left pr-2"></i> Previous</a>
 				</div>
 				<div class="py-3">
-					<a v-if="page && page > 1" href="#" class="lead font-weight-lighter" @click.prevent="loadNext"><i class="fas fa-chevron-right pr-2"></i> Next</a>
+					<a v-if="page && page > 1" href="#" class="lead font-weight-lighter" @click.prevent="loadNext">Next <i class="fas fa-chevron-right pl-2"></i></a>
 				</div>
 			</div>
 			<div class="pt-5">
