@@ -74,7 +74,7 @@
 
 		beforeMount() {
 			let u = new URLSearchParams(window.location.search);
-			if(u.has('page') && u.get('page') > 1 && u.get('page') < 6) {
+			if(u.has('page') && u.get('page') > 1 && u.get('page') <= 6) {
 				this.page = u.get('page');
 			}
 			this.fetchIncidents();
