@@ -85,31 +85,6 @@
 
 </template>
 
-<style type="text/css" scoped>
-.incident-icon {
-	display: inline-flex;
-	width: 44px;
-	height: 44px;
-	background-color: #343a40 !important;
-	border-radius: 50%;
-	align-items: center;
-	justify-content: center;
-	z-index: 3;
-}
-
-.status-day::before {
-    position: absolute;
-    top: 0;
-    left: 34px;
-    display: block;
-    content: "";
-    width: 3px;
-    height: 100%;
-    background-color: #e6ebf1;
-    z-index: 1;
-}
-</style>
-
 <script type="text/javascript">
 	export default {
 
@@ -145,7 +120,7 @@
 			let self = this;
 			setInterval(function() {
 				self.fetchSystems();
-			},1000 * 60 * 15);
+			}, 1000 * 60 * 15);
 		},
 
 		updated() {
