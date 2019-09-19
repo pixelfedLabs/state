@@ -1,33 +1,6 @@
 <template>
 	
-<div v-if="services.length" class="container mt-3">
-
-	<p class="h4 text-center pb-5 font-nunito">Status Monitoring for <a class="font-weight-bold text-dark" :href="services[0].website">{{services[0].domain}}</a></p>
-
-	<div :class="systemHealth.class">
-		<span class="d-inline text-white h3 mb-0 font-nunito font-weight-bold" v-html="systemHealth.message">
-		</span>
-	</div>
-
-	<div class="my-5">
-		<h2 class="pb-2 font-nunito font-weight-bold">Current Status</h2>
-		<div class="list-group">
-			<div class="list-group-item py-3" v-for="(service, index) in services">
-				<div class="d-flex justify-content-between">
-					<div>
-						<a class="lead font-weight-bold mr-2 text-dark" :href="service.url">{{service.name}}</a>
-						<span data-toggle="tooltip" :title="service.tooltip"><i class="far fa-question-circle"></i></span>
-					</div>
-					<div v-html="stateToText(service.state)">
-						Loading...
-					</div>
-				</div>
-				<uptime-graph :id="service.agent"></uptime-graph>
-			</div>
-		</div>
-	</div>
-
-	<div class="">
+	<div class="container mt-3">
 		<div class="my-5 w-100">
 			<p class="h2 pb-3 font-nunito font-weight-bold">Past Incidents</p>
 			<div class="col-12 incidents-list">
@@ -67,8 +40,13 @@
 				</div>
 			</div>
 			<div class="col-12 incidents-footer"></div>
-			<div class="py-3">
-				<a href="/incidents?page=2" class="lead font-weight-lighter"><i class="fas fa-chevron-left pr-2"></i> Previous incidents</a>
+			<div class="d-flex justify-content-between">
+				<div class="py-3">
+					<a v-if="page && page < 6" href="#" class="lead font-weight-lighter" @click.prevent="loadPrevious"><i class="fas fa-chevron-left pr-2"></i> Previous</a>
+				</div>
+				<div class="py-3">
+					<a v-if="page && page > 1" href="#" class="lead font-weight-lighter" @click.prevent="loadNext"><i class="fas fa-chevron-right pr-2"></i> Next</a>
+				</div>
 			</div>
 			<div class="pt-5">
 				<p class="text-center">
@@ -81,8 +59,6 @@
 		</div>
 	</div>
 	
-</div>
-
 </template>
 
 <script type="text/javascript">
@@ -90,37 +66,21 @@
 
 		data() {
 			return {
-				state: 'ok',
-				systemHealth: {
-					class: 'card bg-success card-body py-3',
-					message: '<i class="fas fa-check"></i> <span>All Systems Operational</span>',
-					state: 'ok'
-				},
-				systems: [],
-				services: [],
-				incidents: []
-
+				page: 1,
+				incidents: [],
+				pages: []
 			}
 		},
 
 		beforeMount() {
-			this.fetchServices();
+			let u = new URLSearchParams(window.location.search);
+			if(u.has('page') && u.get('page') > 1 && u.get('page') < 6) {
+				this.page = u.get('page');
+			}
+			this.fetchIncidents();
 		},
 
 		mounted() {
-			this.services.map(item => {
-				if(item.state != 'ok') {
-					if(item.state == 'degraded' && this.systemHealth.state == 'outage') {
-						return;
-					}
-					this.systemHealthToggle(item.state);
-				}
-			});
-
-			let self = this;
-			setInterval(function() {
-				self.fetchSystems();
-			}, 1000 * 60 * 15);
 		},
 
 		updated() {
@@ -128,7 +88,6 @@
 		},
 
 		methods: {
-
 			stateToText(state) {
 				switch(state) {
 					case 'ok':
@@ -196,18 +155,40 @@
 
 			fetchIncidents()
 			{
-				axios.get('/api/v1/incidents')
-					.then(res => {
+				axios.get('/api/v1/incidents', {
+					params: {
+						page: this.page
+					}
+				}).then(res => {
 						this.incidents = res.data;
-					});
+						if(!this.pages.hasOwnProperty(this.page)) {
+							this.pages[this.page] = res.data;
+						}
+				});
 			},
-
-			fetchServices() {
-				axios.get('/api/v1/services')
-					.then(res => {
-						this.services = res.data;
-						this.fetchIncidents();
-					})
+			
+			loadPrevious()
+			{
+				this.page++;
+				window.history.pushState({page: this.page}, document.title, '?page=' + this.page);
+				if(!this.pages.hasOwnProperty(this.page)) {
+					this.fetchIncidents();
+				} else {
+					this.incidents = this.pages[this.page];
+				}
+				window.scrollTo(0, 0);
+			},
+			
+			loadNext()
+			{
+				this.page--;
+				window.history.pushState({page: this.page}, document.title, '?page=' + this.page);
+				if(!this.pages.hasOwnProperty(this.page)) {
+					this.fetchIncidents();
+				} else {
+					this.incidents = this.pages[this.page];
+				}
+				window.scrollTo(0, 0);
 			},
 		},
 	}
