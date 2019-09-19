@@ -46,3 +46,26 @@
 	width: 100%;
 	border-bottom: 3px solid #e6ebf1;
 }
+
+.incident-icon {
+	display: inline-flex;
+	width: 44px;
+	height: 44px;
+	background-color: #343a40 !important;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	z-index: 3;
+}
+
+.status-day::before {
+    position: absolute;
+    top: 0;
+    left: 34px;
+    display: block;
+    content: "";
+    width: 3px;
+    height: 100%;
+    background-color: #e6ebf1;
+    z-index: 1;
+}
