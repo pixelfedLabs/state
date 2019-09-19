@@ -27,4 +27,9 @@ class IncidentController extends Controller
     		return view('incident.show', compact('incident'));
     	}
     }
+
+    public function showPaginated(Request $request)
+    {
+        return view('incident.previous');
+    }
 }

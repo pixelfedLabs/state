@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Cache;
 use \Carbon\Carbon;
+use \Carbon\CarbonPeriod;
 use App\{
 	Agent,
 	AgentCheck,
@@ -56,18 +57,39 @@ class ApiController extends Controller
 
 	public function incidents(Request $request)
 	{
+		$this->validate($request, [
+			'page' => 'nullable|integer|min:1|max:6'
+		]);
 		$incidents = collect([]);
-		$periods = collect(\Carbon\CarbonPeriod::create(now()->subDays(14), now()));
-		foreach($periods->reverse() as $period) {
-			$day = $period->format('Y-m-d');
-			$i = Incident::whereDate('created_at',$day)->get();
-			$res = new Fractal\Resource\Collection($i, new IncidentTransformer());
+		if($request->filled('page')) {
+			$page = $request->input('page');
+			$start = $page == 1 ? 15 : $page * 15;
+			$offset = $page == 1 ? 0 : $start - 14;
+			$periods = collect(CarbonPeriod::create(now()->subDays($start), now()->subDays($offset)));
+			foreach($periods->reverse() as $period) {
+				$day = $period->format('Y-m-d');
+				$i = Incident::whereDate('created_at',$day)->get();
+				$res = new Fractal\Resource\Collection($i, new IncidentTransformer());
 
-			$incident = [
-				'date' => $day,
-				'incidents' => $this->fractal->createData($res)->toArray()
-			];
-			$incidents->push($incident);
+				$incident = [
+					'date' => $day,
+					'incidents' => $this->fractal->createData($res)->toArray()
+				];
+				$incidents->push($incident);
+			}
+		} else {
+			$periods = collect(CarbonPeriod::create(now()->subDays(15), now()));
+			foreach($periods->reverse() as $period) {
+				$day = $period->format('Y-m-d');
+				$i = Incident::whereDate('created_at',$day)->get();
+				$res = new Fractal\Resource\Collection($i, new IncidentTransformer());
+
+				$incident = [
+					'date' => $day,
+					'incidents' => $this->fractal->createData($res)->toArray()
+				];
+				$incidents->push($incident);
+			}
 		}
 
 		return $incidents;
