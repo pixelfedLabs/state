@@ -9,7 +9,7 @@
 	</div>
 
 	<div class="incidents-list">
-		@foreach($incident->updates()->orderBy('created_at', 'desc')->get() as $update)
+		@foreach($incident->updates()->latest()->get() as $update)
 		<div class="row my-3">
 			<div class="col-12 col-md-3 h4 font-weight-bold">{{$update->getState()}}</div>
 			<div class="col-12 col-md-9">
