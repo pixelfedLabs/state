@@ -38,7 +38,7 @@
 						</span>
 						<div class="media-body mb-3">
 							<p class="h4 font-weight-bold">{{humanDate(i.date)}}</p>
-							<div v-if="i.incidents.length && index <= 2" v-for="(incident, index) in reverse(i.incidents)" class="card card-body box-shadow mb-2">
+							<div v-if="i.incidents.length && index <= 2" v-for="(incident, index) in i.incidents" class="card card-body box-shadow mb-2">
 								<div v-if="incident.state == 'resolved'">
 									<p class="lead font-weight-bold">Resolved Incident: {{incident.title}}</p>
 									<p class="mb-0 lead">View <a :href="incident.url">Incident</a> Report</p>
@@ -209,11 +209,6 @@
 						this.fetchIncidents();
 					})
 			},
-
-			reverse(data) {
-				return _.reverse(data);
-			},
-
 		},
 	}
 </script>
